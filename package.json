@@ -1,0 +1,32 @@
+{
+  "name": "pissed-off",
+  "version": "1.0.0",
+  "description": "mern app for reviews and complaints that people usually don't bother to talk about because they might be too trivial",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YellowFlash2012/pissed-off.git"
+  },
+  "author": "Vivien H.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YellowFlash2012/pissed-off/issues"
+  },
+  "homepage": "https://github.com/YellowFlash2012/pissed-off#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "helmet": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.4",
+    "morgan": "^1.10.0"
+  }
+}
