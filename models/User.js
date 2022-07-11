@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema(
             required: true,
             validate: {
                 validator: validator.isStrongPassword,
-                message: "Your password must have at least 1 special character",
+                message: "Your password must have at least 1 special character, 1 uppercase letter, 1 lowercase letter, 1 number",
             },
             minlength: 13,
-            maxlength: 21,
+            
         },
         isAdmin: { type: Boolean, required: true, default: false },
     },

@@ -4,17 +4,15 @@ import { config } from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
 
-import connectDB from "./config/db.js";
 
+import connectDB from "./config/db.js";
+import userRoutes from "./routes/users.js"
 
 config()
 const app = express();
 app.use(express.json())
 app.use(helmet())
 
-app.get("/", (req, res) => {
-    res.send("We are live and running!");
-});
 
 const PORT = process.env.PORT || 5000;
 
@@ -22,6 +20,12 @@ if (process.env.NODE_ENV === "development") {
     app.use(morgan('dev'))
 }
 
+
+app.get("/", (req, res) => {
+    res.send("We are live and running!");
+});
+
+app.use("/api/v1/users",userRoutes)
 
 connectDB()
 app.listen(PORT, () => {

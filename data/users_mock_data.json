@@ -1,0 +1,55 @@
+
+
+[
+    {
+        "name": "Hokage",
+        "email": "edimitru0@squarespace.com",
+        "password": "g0wEpyoei!yg25df",
+        "isAdmin":true
+    },
+    {
+        "name": "Fremont Magog",
+        "email": "fmagog1@chronoengine.com",
+        "password": "KZkhydshfh@g5pEl"
+    },
+    {
+        "name": "Lauritz Falck",
+        "email": "lfalck2@amazon.com",
+        "password": "MLXqoh&qgYms1YhG"
+    },
+    {
+        "name": "Augusto Lunney",
+        "email": "alunney3@eepurl.com",
+        "password": "Nddgbovq#dfWSQ4"
+    },
+    {
+        "name": "Opalina Huckerbe",
+        "email": "ohuckerbe4@about.me",
+        "password": "iI3dghdbsq5h@PK"
+    },
+    {
+        "name": "Caresa Wrightim",
+        "email": "cwrightim5@vk.com",
+        "password": "5bjoucxhv!f7KoAa"
+    },
+    {
+        "name": "Milissent Cleft",
+        "email": "mcleft6@nhs.uk",
+        "password": "wVUhsbd5i@fpzeOWU"
+    },
+    {
+        "name": "Parker Lafford",
+        "email": "plafford7@statcounter.com",
+        "password": "Ulohsdvb&79J8KmQPD"
+    },
+    {
+        "name": "Kelci Secrett",
+        "email": "ksecrett8@kickstarter.com",
+        "password": "u3ihdfdfgjWit9Cdh#l"
+    },
+    {
+        "name": "Cass Loft",
+        "email": "cloft9@usnews.com",
+        "password": "KUihhdf7XQjSR@dfy7S"
+    }
+]
