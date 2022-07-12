@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
 );
 
 // ***comparing the pw for the login route
-userSchema.methods.matchPaswword = async function (enteredPw) {
+userSchema.methods.matchPassword = async function (enteredPw) {
     return await bcrypt.compare(enteredPw, this.password);
 };
 
