@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken"
 import asyncHandler from "express-async-handler"
+import User from "../models/User.js";
 
-const protect = asyncHandler((req, res, next) => {
+const protect = asyncHandler(async (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer")) {
@@ -11,12 +12,13 @@ const protect = asyncHandler((req, res, next) => {
     const token = authHeader.split(" ")[1];
 
     const payload = jwt.verify(token, process.env.jwt_secret);
+    console.log(payload);
 
     if (!payload) {
         throw new Error("Invalid credentials, you can't do that")
     }
 
-    req.user = payload.id;
+    req.user = await User.findById(payload.id).select('-password')
 
     next()
 });

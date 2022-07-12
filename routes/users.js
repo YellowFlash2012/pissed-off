@@ -5,6 +5,7 @@ import asyncHandler from "express-async-handler"
 
 import User from "../models/User.js";
 import protect from "../middleware/protect.js";
+import admin from "../middleware/admin.js";
 
 
 const router = express.Router();
@@ -94,8 +95,11 @@ router.post("/login", asyncHandler(async (req, res) => {
     }
 }))
 
+// @desc    Get user profile details
+// @route   GET /api/v1/users/profile
+// @access  Private
 router.get("/profile", protect, async (req, res) => {
-    const user = await User.findById(req.user);
+    const user = await User.findById(req.user._id);
     console.log(req.user);
 
     if (user) {
@@ -109,5 +113,80 @@ router.get("/profile", protect, async (req, res) => {
         throw new Error("User not found!")
     }
 })
+
+// @desc    Update user profile
+// @route   PUT /api/v1/users/:id
+// @access  Private
+router.put("/profile", protect, asyncHandler(async (req, res) => {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+        throw new Error("All those fields are required!");
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, req.body, { new: true });
+
+    res.status(201).json({
+        name: updatedUser.name,
+        email: updatedUser.email,
+        
+    })
+
+
+}));
+
+
+// ***Admin zone only***
+// @desc    Get all users
+// @route   GET /api/v1/users
+// @access  Private - Admin only
+router.get("/", protect, admin, asyncHandler(async (req, res) => {
+    const users = await User.find();
+
+    res.status(200).json(users)
+}))
+
+// @desc    Get one single user
+// @route   GET /api/v1/users/:id
+// @access  Private - Admin only
+router.get("/:id", protect, admin, asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    res.status(200).json({
+        _id: user.id,
+        name: user.name,
+        email: user.email
+    })
+}));
+
+// @desc    Update a user
+// @route   PUT /api/v1/users/:id
+// @access  Private - Admin only
+router.get("/:id", protect, admin, asyncHandler(async (req, res) => {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+        throw new Error("All those fields are required!");
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+    });
+
+    res.status(201).json({
+        name: updatedUser.name,
+        email: updatedUser.email,
+    });
+}))
+// @desc    Delete a user
+// @route   DELETE /api/v1/users/:id
+// @access  Private - Admin only
+router.get("/:id", protect, admin, asyncHandler(async (req, res) => {
+    const user = await User.findByIdAndRemove(req.params.id)
+
+    res.status(200).json("User removed!")
+}))
+
+
 
 export default router
