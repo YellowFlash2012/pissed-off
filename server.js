@@ -7,6 +7,7 @@ import helmet from "helmet";
 
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/users.js"
+import reviewRoutes from "./routes/reviews.js"
 
 config()
 const app = express();
@@ -25,7 +26,8 @@ app.get("/", (req, res) => {
     res.send("We are live and running!");
 });
 
-app.use("/api/v1/users",userRoutes)
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/reviews", reviewRoutes);
 
 connectDB()
 app.listen(PORT, () => {

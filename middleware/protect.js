@@ -18,7 +18,7 @@ const protect = asyncHandler(async (req, res, next) => {
         throw new Error("Invalid credentials, you can't do that")
     }
 
-    req.user = await User.findById(payload.id).select('-password')
+    req.user = await User.findById(payload.id).select('-password');
 
     next()
 });

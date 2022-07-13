@@ -2,13 +2,17 @@ import express from "express";
 
 import Joi from "joi";
 import asyncHandler from "express-async-handler"
+import apicache from "apicache";
 
 import User from "../models/User.js";
 import protect from "../middleware/protect.js";
 import admin from "../middleware/admin.js";
+import Review from "../models/Review.js";
+import mongoose from "mongoose";
 
 
 const router = express.Router();
+let cache = apicache.middleware;
 
 // @desc    Sign up new user & get token
 // @route   POST /api/users/
@@ -98,15 +102,17 @@ router.post("/login", asyncHandler(async (req, res) => {
 // @desc    Get user profile details
 // @route   GET /api/v1/users/profile
 // @access  Private
-router.get("/profile", protect, async (req, res) => {
+router.get("/profile", cache("60 minutes"), protect, async (req, res) => {
     const user = await User.findById(req.user._id);
-    console.log(req.user);
+    
+    const reviews = await Review.find({ createdBy: user._id });
 
     if (user) {
         res.json({
             _id: user._id,
             name: user.name,
-            email:user.email
+            email: user.email,
+            reviews:reviews
         })
     } else {
         res.status(404)
@@ -129,8 +135,8 @@ router.put("/profile", protect, asyncHandler(async (req, res) => {
     res.status(201).json({
         name: updatedUser.name,
         email: updatedUser.email,
-        
-    })
+        token: updatedUser.createJWT(updatedUser._id),
+    });
 
 
 }));
