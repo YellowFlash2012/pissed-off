@@ -2,6 +2,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import { useState } from "react";
 import GlobalLayout from "../components/GlobalLayout";
+import All from "../components/tabs/All";
 
 const Home = () => {
     const [value, setValue] = useState('1');
@@ -22,7 +23,9 @@ const Home = () => {
                     </TabList>
                 </Box>
 
-                <TabPanel value="1">content of all</TabPanel>
+                <TabPanel value="1">
+                    <All />
+                </TabPanel>
                 <TabPanel value="2">content of upset</TabPanel>
                 <TabPanel value="3">content of furious</TabPanel>
                 <TabPanel value="4">content of really-pissed-off</TabPanel>

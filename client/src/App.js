@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Landing from './pages/Landing';
 
 import './App.css';
+import Review from './pages/Review';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
 <Route path="/" element={<Landing/>} />
 <Route path="/home" element={<Home/>} />
+<Route path="/review/:id" element={<Review/>} />
 <Route path="/auth" element={<Auth/>} />
       </Routes>
     </BrowserRouter>

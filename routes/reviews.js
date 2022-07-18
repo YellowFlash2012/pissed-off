@@ -1,6 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler"
 import apicache from "apicache";
+import uniqueRandomArray from 'unique-random-array';
 
 import protect from "../middleware/protect.js";
 import Review from "../models/Review.js";
@@ -12,7 +13,7 @@ let cache = apicache.middleware;
 // @route   GET /api/v1/reviews
 // @access  Public
 router.get("/", cache("60 minutes"), asyncHandler(async (req, res) => {
-    const reviews = await Review.find();
+    const reviews = await Review.find()
 
     const reviewsAgg = await Review.aggregate([
         
@@ -48,6 +49,19 @@ router.post("/", protect, asyncHandler(async (req, res) => {
     }
 
     req.body.createdBy = req.user._id;
+    req.body.name = req.user.name;
+    req.body.color = uniqueRandomArray([
+        "#849712",
+        "#3f0549",
+        "#b419ac",
+        "#e1f9fa",
+        "#4afd86",
+        "#afd446",
+        "#56bcd4",
+        "#6160ce",
+        "#d9ba9a",
+        "#d32029",
+    ]);
 
     const newReview = await Review.create(req.body)
 

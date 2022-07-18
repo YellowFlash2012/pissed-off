@@ -16,11 +16,33 @@ const reviewSchema = new mongoose.Schema(
             enum: ["upset", "furious", "really-pissed-off"],
             default: "upset",
         },
+        color: {
+            type: String,
+
+            enum: [
+                "#849712",
+                "#3f0549",
+                "#b419ac",
+                "#e1f9fa",
+                "#4afd86",
+                "#afd446",
+                "#56bcd4",
+                "#6160ce",
+                "#d9ba9a",
+                "#d32029",
+            ],
+            default: "849712",
+        },
         content: {
             type: String,
             required: [true, "Please enter a detailed review"],
 
             minlength: 20,
+        },
+
+        name: {
+            type: String,
+            required: [true, "Please enter reviewer's full name"],
         },
 
         createdBy: {
