@@ -11,13 +11,16 @@ import GlobalLayout from "../components/GlobalLayout";
 
 const Review = () => {
     const { id } = useParams();
-    const location = `http://reallypissed.off/reviews/${id}`;
+    
     
 
     const { data, error, isLoading, isError } = useQuery(
-        "getAllReviews",
+        "getOneReview",
         () => {
             return axios.get(`/api/v1/reviews/${id}`);
+        },
+        {
+            cacheTime:600000
         }
     );
 
@@ -41,6 +44,10 @@ const Review = () => {
 
     return (
         <GlobalLayout>
+            <Box marginY="1rem" marginLeft="1rem">
+
+            <Link to="/home">Back Home</Link>
+            </Box>
             <Box>
                 <Card>
                     <CardContent>
@@ -68,16 +75,15 @@ const Review = () => {
 
                 <Card>
                     <CardContent>
-
-                <DiscussionEmbed
-                    shortname="reallypissed-off"
-                    config={{
-                        url: "http://localhost:3000",
-                        identifier: data.data._id,
-                        title: data.data.title,
-                        language: "en_EN", //e.g. for Traditional Chinese (Taiwan)
-                    }}
-                />
+                        <DiscussionEmbed
+                            shortname="reallypissed-off"
+                            config={{
+                                url: "http://localhost:3000",
+                                identifier: data.data._id,
+                                title: data.data.title,
+                                language: "en_EN", //e.g. for Traditional Chinese (Taiwan)
+                            }}
+                        />
                     </CardContent>
                 </Card>
             </Box>

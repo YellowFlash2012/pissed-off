@@ -37,6 +37,10 @@ const Navbar = () => {
         setAnchorElUser(null);
     };
 
+    const upset ="😤"
+     const furious="😠" 
+     const rpo="😡"
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">

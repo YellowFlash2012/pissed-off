@@ -15,14 +15,29 @@ let cache = apicache.middleware;
 router.get("/", cache("60 minutes"), asyncHandler(async (req, res) => {
     const reviews = await Review.find()
 
+    const upsetReviews = await Review.where({ rating: "upset" });
+
+    const furiousReviews = await Review.where({ rating: "furious" });
+
+    const rpoReviews = await Review.where({ rating: "really-pissed-off" });
+
+
     const reviewsAgg = await Review.aggregate([
         
         { $group: { _id: "$rating", count: { $sum: 1 } } },
     ]);
 
-    console.log(reviewsAgg);
+    
 
-    res.status(200).json({ reviewsAgg: reviewsAgg, reviews: reviews });
+    res.status(200).json({
+        reviewsAgg: reviewsAgg,
+        data: {
+            reviews: reviews,
+            upsetReviews: upsetReviews,
+            furiousReviews: furiousReviews,
+            rpoReviews: rpoReviews,
+        },
+    });
 }));
 
 // @desc    Get one review

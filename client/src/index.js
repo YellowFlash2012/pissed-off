@@ -6,6 +6,7 @@ import {
     QueryClient,
     QueryClientProvider,
 } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 
 import App from './App';
@@ -17,14 +18,17 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-
-      <App />
-      </QueryClientProvider>
-    </Provider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <Provider store={store}>
+            <QueryClientProvider client={queryClient}>
+                <App />
+                <ReactQueryDevtools
+                    initialIsOpen={false}
+                    position="bottom-right"
+                />
+            </QueryClientProvider>
+        </Provider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

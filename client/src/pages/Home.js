@@ -3,6 +3,9 @@ import { Box, Tab } from "@mui/material";
 import { useState } from "react";
 import GlobalLayout from "../components/GlobalLayout";
 import All from "../components/tabs/All";
+import Upset from "../components/tabs/Upset";
+import Furious from "../components/tabs/Furious";
+import PissedOff from "../components/tabs/PissedOff";
 
 const Home = () => {
     const [value, setValue] = useState('1');
@@ -26,9 +29,15 @@ const Home = () => {
                 <TabPanel value="1">
                     <All />
                 </TabPanel>
-                <TabPanel value="2">content of upset</TabPanel>
-                <TabPanel value="3">content of furious</TabPanel>
-                <TabPanel value="4">content of really-pissed-off</TabPanel>
+                <TabPanel value="2">
+                    <Upset />
+                </TabPanel>
+                <TabPanel value="3">
+                    <Furious />
+                </TabPanel>
+                <TabPanel value="4">
+                    <PissedOff />
+                </TabPanel>
 </TabContext>
         </Box>
     </GlobalLayout>;
