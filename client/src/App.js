@@ -8,6 +8,9 @@ import Landing from './pages/Landing';
 import './App.css';
 import Review from './pages/Review';
 
+// import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
+
 function App() {
   return (
     <BrowserRouter>
