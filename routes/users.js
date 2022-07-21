@@ -28,7 +28,10 @@ router.post("/", asyncHandler(async (req, res) => {
     const { error } = schema.validate(req.body);
 
     if (error) {
-        return res.status(400).send(error.details[0].message);
+        
+        // return res.status(400).send(error.details[0].message);
+        res.status(400);
+        throw new Error(error.details[0].message);
     }
 
     const { name, email, password } = req.body;
@@ -37,7 +40,10 @@ router.post("/", asyncHandler(async (req, res) => {
 
     if (existingUser) {
         res.status(400);
+
         throw new Error("A user with this email address already exists");
+
+        
     }
 
     // let's create a new user
@@ -73,7 +79,10 @@ router.post("/login", asyncHandler(async (req, res) => {
     const { error } = schema.validate(req.body);
 
     if (error) {
-        return res.status(400).send(error.details[0].message);
+        // return res.status(400).send(error.details[0].message);
+
+        res.status(400);
+        throw new Error(error.details[0].message);
     }
 
     const { email, password } = req.body;
@@ -82,7 +91,9 @@ router.post("/login", asyncHandler(async (req, res) => {
 
     if (!user) {
         res.status(400)
-        throw new Error("No such user, sign up first!")
+        throw new Error("No such user, sign up first!");
+
+        
     }
 
     if (user && (await user.matchPassword(password))) {

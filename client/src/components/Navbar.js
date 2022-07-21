@@ -13,14 +13,22 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useState } from "react";
 import { Stack } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
-const pages = ["Products", "Pricing", "Blog"];
+import {Link,NavLink} from "react-router-dom"
+import { logout } from "../features/authSlice";
+import { message } from "antd";
+
+const pages = ["Add Review", "Login", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
 
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
+
+    const { user } = useSelector(store => store.auth);
+    const dispatch = useDispatch();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -45,11 +53,10 @@ const Navbar = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    
                     <img
                         src="emoticon-angry.png"
                         alt=""
-                        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+                        style={{ marginRight: "0.5rem" }}
                     />
                     <Typography
                         variant="h6"
@@ -68,13 +75,10 @@ const Navbar = () => {
                         flexGrow={1}
                     >
                         <Stack spacing={0}>
-
-                            <p style={{lineHeight:"0.9"}}>
+                            <p style={{ lineHeight: "0.9" }}>
                                 really <br />
-                                pissed <br />
-                                off
+                                pissed-off
                             </p>
-                        
                         </Stack>
                     </Typography>
 
@@ -112,16 +116,35 @@ const Navbar = () => {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
+                            <MenuItem
+
+                            // onClick={handleCloseNavMenu}
+                            >
+                                <NavLink
+                                    to="/add-new-review"
+                                    textAlign="center"
                                 >
-                                    <Typography textAlign="center">
-                                        {page}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
+                                    Add Review
+                                </NavLink>
+                            </MenuItem>
+
+                            <MenuItem
+
+                            // onClick={handleCloseNavMenu}
+                            >
+                                <NavLink to="/auth" textAlign="center">
+                                    Login
+                                </NavLink>
+                            </MenuItem>
+
+                            <MenuItem
+
+                            // onClick={handleCloseNavMenu}
+                            >
+                                <NavLink to="/blog" textAlign="center">
+                                    Blog
+                                </NavLink>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <AdbIcon
@@ -149,61 +172,112 @@ const Navbar = () => {
                         sx={{
                             flexGrow: 0,
                             display: { xs: "none", md: "flex" },
-                            marginRight:"5rem"
+                            marginRight: "5rem",
                         }}
                     >
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "white", display: "block" }}
+                        {user ? (
+                            <>
+                                <MenuItem
+
+                                // onClick={handleCloseNavMenu}
+                                >
+                                    <NavLink
+                                        style={{ color: "#fff" }}
+                                        to="/add-new-review"
+                                        textAlign="center"
+                                    >
+                                        Add Review
+                                    </NavLink>
+                                </MenuItem>
+
+                                <MenuItem
+
+                                // onClick={handleCloseNavMenu}
+                                >
+                                    <NavLink
+                                        style={{ color: "#fff" }}
+                                        to="/blog"
+                                        textAlign="center"
+                                    >
+                                        Blog
+                                    </NavLink>
+                                </MenuItem>
+                            </>
+                        ) : (
+                            <MenuItem
+
+                            // onClick={handleCloseNavMenu}
                             >
-                                {page}
-                            </Button>
-                        ))}
+                                <NavLink
+                                    style={{ color: "#fff" }}
+                                    to="/auth"
+                                    textAlign="center"
+                                >
+                                    Login
+                                </NavLink>
+                            </MenuItem>
+                        )}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}
-                            >
-                                <Avatar
-                                    sx={{bgcolor:"success.light"}}
-                                    // alt="Remy Sharp"
-                                    // src="/static/images/avatar/2.jpg"
-                                >RS</Avatar>
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: "45px" }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem
-                                    key={setting}
-                                    onClick={handleCloseUserMenu}
+                    {/* user account section */}
+                    {user && (
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton
+                                    onClick={handleOpenUserMenu}
+                                    sx={{ p: 0 }}
                                 >
+                                    <Avatar
+                                        sx={{ bgcolor: "success.light", marginRight:"0.3rem" }}
+                                        // alt="Remy Sharp"
+                                        // src="/static/images/avatar/2.jpg"
+                                    >
+                                        {user.name.charAt(0)}
+                                        {user.name.split(" ")[1].charAt(0)}
+                                    </Avatar>
+                                    <Typography sx={{ color: "#fff", fontWeight:"bold" }}>
+                                        {user.name}
+                                    </Typography>
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: "45px" }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <NavLink to="/profile" textAlign="center">
+                                        Profile
+                                    </NavLink>
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <NavLink to="/dashboard" textAlign="center">
+                                        Dashboard
+                                    </NavLink>
+                                </MenuItem>
+
+                                <MenuItem onClick={() => {
+                                    dispatch(logout())
+                                    message.info(`See you next time, ${user.name}`)
+                                }}>
                                     <Typography textAlign="center">
-                                        {setting}
+                                        Logout
                                     </Typography>
                                 </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
+                            </Menu>
+                        </Box>
+                    )}
                 </Toolbar>
             </Container>
         </AppBar>

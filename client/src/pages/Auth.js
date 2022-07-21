@@ -7,8 +7,11 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import { Button, ButtonGroup, Card, CardContent, Divider, Typography } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import { Alert, message } from 'antd';
+import { Alert} from 'antd';
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, signupUser } from "../features/authSlice";
 
 const Auth = () => {
     const [values, setValues] = useState({
@@ -20,6 +23,10 @@ const Auth = () => {
         isMember: false,
         emptyFields:false
     });
+
+    const dispatch = useDispatch();
+
+    const { user, loading, error } = useSelector(store => store.auth);
 
     const handleClickShowPassword = () => {
         setValues({
@@ -45,9 +52,9 @@ const Auth = () => {
 
     const authFormHandler = (e) => {
         e.preventDefault();
-        console.log(values);
+        console.log(values.name,values.email,values.password);
 
-        if (!values.name || !values.email || !values.password) {
+        if ((values.isMember && !values.name) || !values.email || !values.password) {
             setValues({
                 ...values,
                 emptyFields: true,
@@ -61,10 +68,28 @@ const Auth = () => {
 
         if (values.isMember) {
             console.log("signup");
+            dispatch(signupUser({ name: values.name, email: values.email, password: values.password }));
+            
+            // login immediately after successful signup
+            if (!error) {
+                
+                dispatch(
+                    loginUser({ email: values.email, password: values.password })
+                    );
+                }
         } else {
             console.log("login");
+            dispatch(loginUser({email:values.email, password:values.password}));
         }
     };
+
+    if (loading) {
+        return (
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <CircularProgress color="success" size="20rem" />
+            </Box>
+        );
+    }
 
 
     return (

@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { useQuery } from "react-query";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { DiscussionEmbed } from "disqus-react";
 
@@ -11,9 +11,8 @@ import GlobalLayout from "../components/GlobalLayout";
 
 const Review = () => {
     const { id } = useParams();
+    console.log(id);
     
-    
-
     const { data, error, isLoading, isError } = useQuery(
         "getOneReview",
         () => {
@@ -40,7 +39,7 @@ const Review = () => {
         );
     }
 
-    // console.log(data);
+    console.log(data);
 
     return (
         <GlobalLayout>

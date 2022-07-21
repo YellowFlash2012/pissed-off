@@ -8,6 +8,7 @@ import helmet from "helmet";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/users.js"
 import reviewRoutes from "./routes/reviews.js"
+import { errorHandler } from "./middleware/error.js";
 
 config()
 const app = express();
@@ -28,6 +29,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
+
+app.use(errorHandler)
 
 connectDB()
 app.listen(PORT, () => {

@@ -29,7 +29,7 @@ const Furious = () => {
         }
     );
 
-    console.log(data);
+    // console.log(data);
 
     if (isLoading) {
         return (
@@ -89,7 +89,7 @@ const Furious = () => {
                                             color="text.secondary"
                                         >
                                             {rw.content.substring(0, 80)}{" "}
-                                            <Link to={`/review/${rw._id}`}>
+                                            <Link to={`/protected/review/${rw._id}`}>
                                                 Read More
                                             </Link>
                                         </Typography>
