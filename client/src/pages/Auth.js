@@ -26,7 +26,7 @@ const Auth = () => {
 
     const dispatch = useDispatch();
 
-    const { user, loading, error } = useSelector(store => store.auth);
+    const { loading, error } = useSelector(store => store.auth);
 
     const handleClickShowPassword = () => {
         setValues({

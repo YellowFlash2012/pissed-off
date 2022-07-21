@@ -6,6 +6,7 @@ const initialState = {
     loading: false,
     error: false,
     user: JSON.parse(localStorage.getItem("user")),
+    userProfile:null
 };
 
 export const signupUser = createAsyncThunk(
@@ -27,7 +28,27 @@ export const loginUser = createAsyncThunk(
     async (user, thunkAPI) => {
         try {
             const res = await axios.post("/api/v1/users/login", user);
-            console.log(res);
+            // console.log(res);
+            return res.data;
+        } catch (error) {
+            // console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data.message);
+        }
+    }
+); 
+
+export const getUserProfile = createAsyncThunk(
+    "auth/getUserProfile",
+    async (user, thunkAPI) => {
+        try {
+            const res = await axios.get("/api/v1/users/profile", {
+                headers: {
+                    authorization: `Bearer ${
+                        thunkAPI.getState().user.token
+                    }`,
+                },
+            });
+            // console.log(res);
             return res.data;
         } catch (error) {
             // console.log(error);
@@ -47,6 +68,7 @@ const authSlice=createSlice({
         }
     },
     extraReducers: (builder) => {
+        // ***signup
         builder.addCase(signupUser.pending, (state) => {
             state.loading = true;
         });
@@ -60,7 +82,11 @@ const authSlice=createSlice({
             // message.success(`Welcome aboard, ${user.name}`)
 
             setTimeout(() => {
-                window.location.href="/home"
+                if (user.isAdmin) {
+                    window.location.href = "/protected/dashboard";
+                } else {
+                    window.location.href = "/protected/profile";
+                }
             }, 5000);
         });
         builder.addCase(signupUser.rejected, (state,action) => {
@@ -70,6 +96,7 @@ const authSlice=createSlice({
             message.error(action.payload)
         });
         
+        // ***login
         builder.addCase(loginUser.pending, (state) => {
             state.loading = true;
         });
@@ -83,13 +110,38 @@ const authSlice=createSlice({
             localStorage.setItem("user", JSON.stringify(user));
             message.success(`Welcome back, ${user.name}`)
 
-
+            setTimeout(() => {
+                if (user.isAdmin) {
+                    window.location.href = "/protected/dashboard";
+                    
+                } else {
+                    
+                    window.location.href = "/protected/profile";
+                }
+            }, 5000);
         });
         builder.addCase(loginUser.rejected, (state,action) => {
             state.loading = false;
             state.error = true;
 
             message.error(action.payload)
+        });
+        
+        // ***get user profile
+        builder.addCase(getUserProfile.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getUserProfile.fulfilled, (state, { payload }) => {
+            
+            state.loading = false;
+            state.userProfile = payload;
+
+        });
+        builder.addCase(getUserProfile.rejected, (state, action) => {
+            state.loading = false;
+            state.error = true;
+
+            message.error(action.payload);
         });
     }
 })

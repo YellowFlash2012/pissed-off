@@ -1,4 +1,6 @@
+import GlobalLayout from "../components/GlobalLayout";
+
 const Blog = () => {
-    return <div>Blog</div>;
+    return <GlobalLayout>Blog</GlobalLayout>;
 };
 export default Blog;

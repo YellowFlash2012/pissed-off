@@ -183,7 +183,7 @@ const Navbar = () => {
                                 >
                                     <NavLink
                                         style={{ color: "#fff" }}
-                                        to="/add-new-review"
+                                        to="/protected/add-new-review"
                                         textAlign="center"
                                     >
                                         Add Review
@@ -196,7 +196,7 @@ const Navbar = () => {
                                 >
                                     <NavLink
                                         style={{ color: "#fff" }}
-                                        to="/blog"
+                                        to="/protected/blog"
                                         textAlign="center"
                                     >
                                         Blog
@@ -257,12 +257,12 @@ const Navbar = () => {
                                 onClose={handleCloseUserMenu}
                             >
                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <NavLink to="/profile" textAlign="center">
+                                    <NavLink to="/protected/profile" textAlign="center">
                                         Profile
                                     </NavLink>
                                 </MenuItem>
                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <NavLink to="/dashboard" textAlign="center">
+                                    <NavLink to="/protected/dashboard" textAlign="center">
                                         Dashboard
                                     </NavLink>
                                 </MenuItem>
