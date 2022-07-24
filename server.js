@@ -30,9 +30,9 @@ if (process.env.NODE_ENV === "development") {
 }
 
 
-app.get("/", (req, res) => {
-    res.send("We are live and running!");
-});
+// app.get("/", (req, res) => {
+//     res.send("We are live and running!");
+// });
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
@@ -45,12 +45,11 @@ if (process.env.NODE_ENV === "production") {
     app.get("*", (req, res) =>
         res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
     );
+} else {
+    app.get("/", (req, res) => {
+        res.send("We are live and running!");
+    });
 }
-// else {
-//     app.get("/", (req, res) => {
-//         res.send("API is running");
-//     });
-// }
 
 app.use(errorHandler)
 
