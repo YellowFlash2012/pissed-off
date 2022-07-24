@@ -6,6 +6,9 @@ const initialState = {
     loading: false,
     error: false,
     user: JSON.parse(localStorage.getItem("user")),
+    
+    oneUserByAdmin:null,
+    users:[],
     userProfile:null
 };
 
@@ -44,7 +47,48 @@ export const getUserProfile = createAsyncThunk(
             const res = await axios.get("/api/v1/users/profile", {
                 headers: {
                     authorization: `Bearer ${
-                        thunkAPI.getState().user.token
+                        thunkAPI.getState().auth.user.token
+                    }`,
+                },
+            });
+            // console.log(res);
+            return res.data;
+        } catch (error) {
+            // console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data.message);
+        }
+    }
+); 
+
+// ***admin section
+export const getAllUsers = createAsyncThunk(
+    "auth/getAllUsers",
+    async (user, thunkAPI) => {
+        // console.log(thunkAPI.getState().auth.user.token);
+        try {
+            const res = await axios.get("/api/v1/users", {
+                headers: {
+                    authorization: `Bearer ${thunkAPI.getState().auth.user.token}`,
+                },
+            });
+            // console.log(res);
+            return res.data;
+        } catch (error) {
+            // console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data.message);
+        }
+    }
+); 
+
+export const getOneUser = createAsyncThunk(
+    "auth/getOneUser",
+    async (id, thunkAPI) => {
+        console.log(thunkAPI.getState().auth.user.token);
+        try {
+            const res = await axios.get(`/api/v1/users/${id}`, {
+                headers: {
+                    authorization: `Bearer ${
+                        thunkAPI.getState().auth.user.token
                     }`,
                 },
             });
@@ -143,6 +187,43 @@ const authSlice=createSlice({
 
             message.error(action.payload);
         });
+        
+        // ***get all users by admin
+        builder.addCase(getAllUsers.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
+            const users = payload;
+            state.loading = false;
+            state.users = users;
+            
+
+        });
+        builder.addCase(getAllUsers.rejected, (state, action) => {
+            state.loading = false;
+            state.error = true;
+
+            message.error(action.payload);
+        });
+        
+        // ***get one user by admin
+        builder.addCase(getOneUser.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getOneUser.fulfilled, (state, { payload }) => {
+            const user = payload;
+            state.loading = false;
+            state.oneUserByAdmin = user;
+
+        });
+        builder.addCase(getOneUser.rejected, (state, action) => {
+            state.loading = false;
+            state.error = true;
+
+            message.error(action.payload);
+        });
+        
+        
     }
 })
 

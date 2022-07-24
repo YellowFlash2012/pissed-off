@@ -261,11 +261,12 @@ const Navbar = () => {
                                         Profile
                                     </NavLink>
                                 </MenuItem>
-                                <MenuItem onClick={handleCloseUserMenu}>
+
+                                {user.isAdmin && <MenuItem onClick={handleCloseUserMenu}>
                                     <NavLink to="/protected/dashboard" textAlign="center">
                                         Dashboard
                                     </NavLink>
-                                </MenuItem>
+                                </MenuItem>}
 
                                 <MenuItem onClick={() => {
                                     dispatch(logout())

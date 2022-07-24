@@ -62,7 +62,7 @@ const Profile = () => {
     return (
         <GlobalLayout>
             <Box sx={{ flexGrow: 1, marginTop: "2rem", paddingX:"2rem" }}>
-                {!isLoading && data?.data.reviews.length === 0 ? (
+                {!isLoading && data?.data.reviews.length === 0 && !user.isAdmin ? (
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                         <Alert severity="error">No review yet, add one!</Alert>
                     </Box>

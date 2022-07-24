@@ -159,8 +159,10 @@ router.put("/profile", protect, asyncHandler(async (req, res) => {
 // @access  Private - Admin only
 router.get("/", protect, admin, asyncHandler(async (req, res) => {
     const users = await User.find();
-
-    res.status(200).json(users)
+    
+    const numOfUsersReviews = await Review.where({ createdBy: req.params.id });
+    
+    res.status(200).json(users);
 }))
 
 // @desc    Get one single user
@@ -169,10 +171,15 @@ router.get("/", protect, admin, asyncHandler(async (req, res) => {
 router.get("/:id", protect, admin, asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
+    console.log(user._id);
+    
+    const numOfUsersReviews = await Review.where({ createdBy:user._id})
+    
     res.status(200).json({
         _id: user.id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        numOfUsersReviews:numOfUsersReviews.length
     })
 }));
 
