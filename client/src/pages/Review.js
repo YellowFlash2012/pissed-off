@@ -44,8 +44,7 @@ const Review = () => {
     return (
         <GlobalLayout>
             <Box marginY="1rem" marginLeft="1rem">
-
-            <Link to="/home">Back Home</Link>
+                <Link to="/home">Back Home</Link>
             </Box>
             <Box>
                 <Card>
@@ -77,7 +76,7 @@ const Review = () => {
                         <DiscussionEmbed
                             shortname="reallypissed-off"
                             config={{
-                                url: "http://localhost:3000",
+                                url: `NODE_ENV==="development"?"http://localhost:3000":"really-pissed-off.herokuapp.com`,
                                 identifier: data.data._id,
                                 title: data.data.title,
                                 language: "en_EN", //e.g. for Traditional Chinese (Taiwan)
