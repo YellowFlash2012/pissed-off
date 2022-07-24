@@ -10,14 +10,21 @@ import admin from "../middleware/admin.js";
 import Review from "../models/Review.js";
 import mongoose from "mongoose";
 
+import rateLimiter from "express-rate-limit";
+
 
 const router = express.Router();
 let cache = apicache.middleware;
+const apiLimiter = rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 3,
+    message: "Too many requests from this IP address",
+});
 
 // @desc    Sign up new user & get token
 // @route   POST /api/users/
 // @access  Public
-router.post("/", asyncHandler(async (req, res) => {
+router.post("/", apiLimiter, asyncHandler(async (req, res) => {
     // Joi schema & validator
     const schema = Joi.object({
         name: Joi.string().required(),
@@ -68,7 +75,7 @@ router.post("/", asyncHandler(async (req, res) => {
 // @desc    Login user & get token
 // @route   POST /api/v1/users/login
 // @access  Public
-router.post("/login", asyncHandler(async (req, res) => {
+router.post("/login", apiLimiter, asyncHandler(async (req, res) => {
 
     const schema = Joi.object({
         

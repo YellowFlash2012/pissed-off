@@ -214,6 +214,7 @@ const authSlice=createSlice({
             const user = payload;
             state.loading = false;
             state.oneUserByAdmin = user;
+            
 
         });
         builder.addCase(getOneUser.rejected, (state, action) => {

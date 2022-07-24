@@ -122,7 +122,7 @@ const Navbar = () => {
                             >
                                 <NavLink
                                     to="/add-new-review"
-                                    textAlign="center"
+                                    textalign="center"
                                 >
                                     Add Review
                                 </NavLink>
@@ -132,7 +132,7 @@ const Navbar = () => {
 
                             // onClick={handleCloseNavMenu}
                             >
-                                <NavLink to="/auth" textAlign="center">
+                                <NavLink to="/auth" textalign="center">
                                     Login
                                 </NavLink>
                             </MenuItem>
@@ -141,7 +141,7 @@ const Navbar = () => {
 
                             // onClick={handleCloseNavMenu}
                             >
-                                <NavLink to="/blog" textAlign="center">
+                                <NavLink to="/blog" textalign="center">
                                     Blog
                                 </NavLink>
                             </MenuItem>
@@ -184,7 +184,7 @@ const Navbar = () => {
                                     <NavLink
                                         style={{ color: "#fff" }}
                                         to="/protected/add-new-review"
-                                        textAlign="center"
+                                        textalign="center"
                                     >
                                         Add Review
                                     </NavLink>
@@ -197,7 +197,7 @@ const Navbar = () => {
                                     <NavLink
                                         style={{ color: "#fff" }}
                                         to="/protected/blog"
-                                        textAlign="center"
+                                        textalign="center"
                                     >
                                         Blog
                                     </NavLink>
@@ -211,7 +211,7 @@ const Navbar = () => {
                                 <NavLink
                                     style={{ color: "#fff" }}
                                     to="/auth"
-                                    textAlign="center"
+                                    textalign="center"
                                 >
                                     Login
                                 </NavLink>
@@ -228,14 +228,22 @@ const Navbar = () => {
                                     sx={{ p: 0 }}
                                 >
                                     <Avatar
-                                        sx={{ bgcolor: "success.light", marginRight:"0.3rem" }}
+                                        sx={{
+                                            bgcolor: "success.light",
+                                            marginRight: "0.3rem",
+                                        }}
                                         // alt="Remy Sharp"
                                         // src="/static/images/avatar/2.jpg"
                                     >
                                         {user.name.charAt(0)}
                                         {user.name.split(" ")[1].charAt(0)}
                                     </Avatar>
-                                    <Typography sx={{ color: "#fff", fontWeight:"bold" }}>
+                                    <Typography
+                                        sx={{
+                                            color: "#fff",
+                                            fontWeight: "bold",
+                                        }}
+                                    >
                                         {user.name}
                                     </Typography>
                                 </IconButton>
@@ -257,21 +265,41 @@ const Navbar = () => {
                                 onClose={handleCloseUserMenu}
                             >
                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <NavLink to="/protected/profile" textAlign="center">
+                                    <Link
+                                        style={{
+                                            color: "#000",
+                                            textAlign: "center",
+                                        }}
+                                        to="/protected/profile"
+                                        // textAlign="center"
+                                    >
                                         Profile
-                                    </NavLink>
+                                    </Link>
                                 </MenuItem>
 
-                                {user.isAdmin && <MenuItem onClick={handleCloseUserMenu}>
-                                    <NavLink to="/protected/dashboard" textAlign="center">
-                                        Dashboard
-                                    </NavLink>
-                                </MenuItem>}
+                                {user.isAdmin && (
+                                    <MenuItem onClick={handleCloseUserMenu}>
+                                        <Link
+                                            style={{
+                                                color: "#000",
+                                                textAlign: "center",
+                                            }}
+                                            to="/protected/dashboard"
+                                            // textAlign="center"
+                                        >
+                                            Dashboard
+                                        </Link>
+                                    </MenuItem>
+                                )}
 
-                                <MenuItem onClick={() => {
-                                    dispatch(logout())
-                                    message.info(`See you next time, ${user.name}`)
-                                }}>
+                                <MenuItem
+                                    onClick={() => {
+                                        dispatch(logout());
+                                        message.info(
+                                            `See you next time, ${user.name}`
+                                        );
+                                    }}
+                                >
                                     <Typography textAlign="center">
                                         Logout
                                     </Typography>

@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -17,14 +17,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import GlobalLayout from "../components/GlobalLayout";
 import { useEffect } from "react";
 import { getAllUsers} from "../features/authSlice";
-import { useQuery } from "react-query";
-import axios from "axios";
+
 import Chart from "../utils/Chart";
+
+
 
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const { user, users} =
-        useSelector((store) => store.auth);
+    const { user, users, oneUserByAdmin } = useSelector((store) => store.auth);
 
     if (!user.isAdmin) {
         <Navigate to="/home" replace />
@@ -60,7 +60,7 @@ const Dashboard = () => {
     return (
         <GlobalLayout>
             <Box sx={{ flexGrow: 1, marginY: "2rem", paddingX: "2rem" }}>
-                <Chart/>
+                <Chart />
             </Box>
 
             <Box sx={{ flexGrow: 1, marginY: "2rem", paddingX: "2rem" }}>
@@ -88,7 +88,7 @@ const Dashboard = () => {
                                         {row.email}
                                     </StyledTableCell>
                                     <StyledTableCell>
-                                        
+                                        {oneUserByAdmin.numOfUsersReviews}
                                     </StyledTableCell>
                                     <StyledTableCell>
                                         <EditIcon
@@ -101,7 +101,6 @@ const Dashboard = () => {
                                         <DeleteForeverIcon
                                             color="error"
                                             sx={{
-                                                
                                                 cursor: "pointer",
                                             }}
                                         />
