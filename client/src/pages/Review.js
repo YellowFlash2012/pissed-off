@@ -76,7 +76,7 @@ const Review = () => {
                         <DiscussionEmbed
                             shortname="reallypissed-off"
                             config={{
-                                url: `NODE_ENV==="development"?"http://localhost:3000":"really-pissed-off.herokuapp.com"`,
+                                url: "https://really-pissed-off.herokuapp.com/",
                                 identifier: data.data._id,
                                 title: data.data.title,
                                 language: "en_EN", //e.g. for Traditional Chinese (Taiwan)
