@@ -9,6 +9,8 @@ import { DiscussionEmbed } from "disqus-react";
 
 import GlobalLayout from "../components/GlobalLayout";
 
+import "./Review.css"
+
 const Review = () => {
     const { id } = useParams();
     console.log(id);
@@ -46,7 +48,7 @@ const Review = () => {
             <Box marginY="1rem" marginLeft="1rem">
                 <Link to="/home">Back Home</Link>
             </Box>
-            <Box>
+            <Box className="container">
                 <Card>
                     <CardContent>
                         <Typography gutterBottom variant="h3">
@@ -79,7 +81,7 @@ const Review = () => {
                                 url: "https://really-pissed-off.herokuapp.com/",
                                 identifier: data.data._id,
                                 title: data.data.title,
-                                language: "en_EN", //e.g. for Traditional Chinese (Taiwan)
+                                language: "en_EN",
                             }}
                         />
                     </CardContent>

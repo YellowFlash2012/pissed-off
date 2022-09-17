@@ -27,12 +27,16 @@ function App() {
 
                 <Route path="/protected" element={<ProtectedRoutes />}>
                     <Route path="/protected/review/:id" element={<Review />} />
+                    
                     <Route
                         path="/protected/add-new-review"
                         element={<NewReview />}
                     />
+                    
                     <Route path="/protected/blog" element={<Blog />} />
+                    
                     <Route path="/protected/profile" element={<Profile />} />
+                    
                     <Route
                         path="/protected/dashboard"
                         element={<Dashboard />}

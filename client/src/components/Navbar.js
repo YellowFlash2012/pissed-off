@@ -46,8 +46,8 @@ const Navbar = () => {
     };
 
     const upset ="😤"
-     const furious="😠" 
-     const rpo="😡"
+    const furious="😠" 
+    const rpo="😡"
 
     return (
         <AppBar position="static">

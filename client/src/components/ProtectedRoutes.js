@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
+import GlobalLayout from "./GlobalLayout";
 
 const ProtectedRoutes = ({children}) => {
     const { user } = useSelector(store => store.auth);
@@ -8,7 +9,6 @@ const ProtectedRoutes = ({children}) => {
         return <Navigate to="/auth" replace />
     }
     return <>
-        
         <Outlet/>
     </>
 };

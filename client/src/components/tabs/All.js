@@ -34,7 +34,7 @@ const All = () => {
     if (isLoading) {
         return (
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress color="success" size="20rem" />
+                <CircularProgress color="success" size="15rem" />
             </Box>
         );
     }

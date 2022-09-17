@@ -1,11 +1,18 @@
+import React, {Suspense} from "react"
+
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import { useState } from "react";
 import GlobalLayout from "../components/GlobalLayout";
-import All from "../components/tabs/All";
-import Upset from "../components/tabs/Upset";
-import Furious from "../components/tabs/Furious";
-import PissedOff from "../components/tabs/PissedOff";
+// import All from "../components/tabs/All";
+// import Upset from "../components/tabs/Upset";
+// import Furious from "../components/tabs/Furious";
+// import PissedOff from "../components/tabs/PissedOff";
+
+const All = React.lazy(() => import("../components/tabs/All"));
+const Upset = React.lazy(() => import("../components/tabs/Upset"));
+const Furious = React.lazy(() => import("../components/tabs/Furious"));
+const PissedOff = React.lazy(() => import("../components/tabs/PissedOff"));
 
 const Home = () => {
     const [value, setValue] = useState('1');
@@ -26,6 +33,8 @@ const Home = () => {
                     </TabList>
                 </Box>
 
+                <Suspense fallback={<div>Loading...</div>}>
+
                 <TabPanel value="1">
                     <All />
                 </TabPanel>
@@ -38,6 +47,7 @@ const Home = () => {
                 <TabPanel value="4">
                     <PissedOff />
                 </TabPanel>
+                </Suspense>
 </TabContext>
         </Box>
     </GlobalLayout>;
