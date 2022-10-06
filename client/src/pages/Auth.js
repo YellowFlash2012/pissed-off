@@ -12,6 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Alert} from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signupUser } from "../features/authSlice";
+import { PropagateLoader } from "react-spinners";
 
 const Auth = () => {
     const [values, setValues] = useState({
@@ -85,8 +86,15 @@ const Auth = () => {
 
     if (loading) {
         return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress color="success" size="20rem" />
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "60vh",
+                }}
+            >
+                <PropagateLoader color="#36d7b7" size={25} />
             </Box>
         );
     }

@@ -5,6 +5,9 @@ import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 
 import Grid from "@mui/material/Grid";
+
+import { PropagateLoader } from 'react-spinners'
+
 import {
     Avatar,
     Card,
@@ -33,8 +36,8 @@ const All = () => {
 
     if (isLoading) {
         return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress color="success" size="15rem" />
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems:"center", height:"60vh" }}>
+                <PropagateLoader color="#36d7b7" size={25} />
             </Box>
         );
     }

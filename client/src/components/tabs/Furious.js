@@ -14,6 +14,7 @@ import {
     Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { PropagateLoader } from "react-spinners";
 
 const Furious = () => {
     const { data, error, isLoading, isError } = useQuery(
@@ -33,8 +34,8 @@ const Furious = () => {
 
     if (isLoading) {
         return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress color="success" size="20rem" />
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems:"center", height:"60vh" }}>
+                <PropagateLoader color="#36d7b7" size={25} />
             </Box>
         );
     }

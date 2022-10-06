@@ -36,6 +36,7 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.4.4",
         "morgan": "^1.10.0",
+        "react-hook-form": "^7.36.1",
         "unique-random-array": "^3.0.0",
         "validator": "^13.7.0",
         "winston": "^3.8.2",
