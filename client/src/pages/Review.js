@@ -78,7 +78,7 @@ const Review = () => {
                         <DiscussionEmbed
                             shortname="reallypissed-off"
                             config={{
-                                url: "https://really-pissed-off.herokuapp.com/",
+                                url: `https://really-pissed-off.herokuapp.com/protected/review/${id}`,
                                 identifier: data.data._id,
                                 title: data.data.title,
                                 language: "en_EN",
