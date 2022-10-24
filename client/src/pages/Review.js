@@ -27,7 +27,14 @@ const Review = () => {
 
     if (isLoading) {
         return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
+                }}
+            >
                 <PropagateLoader color="#36d7b7" size={15} />
             </Box>
         );
@@ -84,6 +91,7 @@ const Review = () => {
                                 language: "en_EN",
                             }}
                         />
+                        
                     </CardContent>
                 </Card>
             </Box>
