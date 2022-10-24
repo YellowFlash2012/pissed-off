@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import { PropagateLoader } from "react-spinners";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -28,7 +28,7 @@ const Review = () => {
     if (isLoading) {
         return (
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress color="success" size="20rem" />
+                <PropagateLoader color="#36d7b7" size={15} />
             </Box>
         );
     }

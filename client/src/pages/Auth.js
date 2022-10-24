@@ -7,7 +7,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import { Button, ButtonGroup, Card, CardContent, Divider, Typography } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+
 
 import { Alert} from 'antd';
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,8 @@ const Auth = () => {
         isMember: false,
         emptyFields:false
     });
+
+    const { name, email, password, showPassword, isMember, emptyFields } = values;
 
     const dispatch = useDispatch();
 
@@ -94,7 +96,7 @@ const Auth = () => {
                     height: "60vh",
                 }}
             >
-                <PropagateLoader color="#36d7b7" size={25} />
+                <PropagateLoader color="#36d7b7" size={15} />
             </Box>
         );
     }
@@ -202,7 +204,8 @@ const Auth = () => {
                             color="success"
                             size="large"
                         >
-                            {values.isMember ? "Sign Up" : "Login"}
+
+                            {isMember ? "Sign Up" : "Login"}
                         </Button>
                     </ButtonGroup>
 

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-import CircularProgress from "@mui/material/CircularProgress";
+import { PropagateLoader } from "react-spinners";
 import Box from "@mui/material/Box";
 
 import { Alert } from "antd";
@@ -46,14 +46,21 @@ const Profile = () => {
     if (isLoading) {
         return (
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress color="success" size="20rem" />
+                <PropagateLoader color="#36d7b7" size={15} />
             </Box>
         );
     }
 
     if (isError) {
         return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "60vh",
+                }}
+            >
                 <Alert message={error} type="error" showIcon />
             </Box>
         );
