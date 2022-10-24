@@ -11,8 +11,12 @@ front end: react, redux, react query
 backend: node, expressjs, mongoose
 db: mongoDB
 
+# how to run the app
+1- step 1: npm i
+2- step 2: npm i -- prefix client
+3- step 3: npm run server
+4- step 4: npm run client
+
 # Highlights:
 1- anyone can access the homepage and have an overview of the reviews, but to read the full reviews, you'll need to login
 2- an admin dashboard where the admin can have a global view of the users, their activities
-
-https://flatlogic.com/blog/best-libraries-for-react-i18n/
