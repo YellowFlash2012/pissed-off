@@ -13,13 +13,13 @@ let cache = apicache.middleware;
 // @route   GET /api/v1/reviews
 // @access  Public
 router.get("/", cache("60 minutes"), asyncHandler(async (req, res) => {
-    const reviews = await Review.find()
+    const reviews = await Review.find().limit(24)
 
-    const upsetReviews = await Review.where({ rating: "upset" });
+    const upsetReviews = await Review.where({ rating: "upset" }).limit(12);
 
-    const furiousReviews = await Review.where({ rating: "furious" });
+    const furiousReviews = await Review.where({ rating: "furious" }).limit(12);
 
-    const rpoReviews = await Review.where({ rating: "really-pissed-off" });
+    const rpoReviews = await Review.where({ rating: "really-pissed-off" }).limit(12);
 
 
     const reviewsAgg = await Review.aggregate([
@@ -86,7 +86,7 @@ router.post("/", protect, asyncHandler(async (req, res) => {
 // @desc    update a review
 // @route   PUT /api/v1/reviews/:id
 // @access  Private
-router.get(
+router.put(
     "/:id",
     protect,
     asyncHandler(async (req, res) => {
