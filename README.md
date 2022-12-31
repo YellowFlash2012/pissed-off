@@ -3,7 +3,8 @@ A directory for recording petty, annoying things that people don't think of writ
 
 <a href="https://really-pissed-off.herokuapp.com/">Live preview</a>
 
-# Project scope: this is an mvp of platform that will eventually serve as breeding ground for practical ideas that budding entrepreneurs can tap into to launch a new venture or supercharge theur exisitng ones.
+# Project scope
+This is an mvp of platform that will eventually serve as breeding ground for practical ideas that budding entrepreneurs can tap into to launch a new venture or supercharge theur exisitng ones.
 But right now, it's in its infancy and will just be about gathering people petty annoying experiences that they don't find it worthy to share with others even though those experiences could help other make better informed decisions.
 
 # Tech stack:

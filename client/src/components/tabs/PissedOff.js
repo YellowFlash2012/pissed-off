@@ -55,6 +55,10 @@ const PissedOff = () => {
         );
     }
 
+    const upset = "😤";
+    const furious = "😠";
+    const rpo = "😡";
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             {data.data.data.rpoReviews === "undefined" && (
@@ -88,7 +92,7 @@ const PissedOff = () => {
                                             </Avatar>
                                         }
                                         title={rw.title.substring(0, 25)}
-                                        subheader={rw.rating}
+                                        subheader={rw.rating==="really-pissed-off" && rpo}
                                     />
                                     <Divider />
                                     <CardContent>

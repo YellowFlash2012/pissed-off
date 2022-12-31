@@ -48,7 +48,7 @@ const Review = () => {
         );
     }
 
-    console.log(data);
+    // console.log(data);
 
     return (
         <GlobalLayout>
