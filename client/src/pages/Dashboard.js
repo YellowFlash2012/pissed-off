@@ -1,6 +1,6 @@
-import { Box, Button } from "@mui/material";
+import { Box} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
+
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -22,13 +22,10 @@ import Chart from "../utils/Chart";
 
 
 
+
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const { user, users, oneUserByAdmin } = useSelector((store) => store.auth);
-
-    if (!user.isAdmin) {
-        <Navigate to="/home" replace />
-    }
+    const { users, oneUserByAdmin } = useSelector((store) => store.auth);
 
     useEffect(() => {
         dispatch(getAllUsers());
@@ -58,60 +55,70 @@ const Dashboard = () => {
     }));
 
     return (
-        <GlobalLayout>
-            <Box sx={{ flexGrow: 1, marginY: "2rem", paddingX: "2rem" }}>
-                <Chart />
-            </Box>
+    
+            <GlobalLayout>
+                <Box sx={{ flexGrow: 1, marginY: "2rem", paddingX: "2rem" }}>
+                    <Chart />
+                </Box>
 
-            <Box sx={{ flexGrow: 1, marginY: "2rem", paddingX: "2rem" }}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>#</StyledTableCell>
-                                <StyledTableCell>Name</StyledTableCell>
-                                <StyledTableCell>Email</StyledTableCell>
-                                <StyledTableCell># of reviews</StyledTableCell>
-                                <StyledTableCell>Actions</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {users.map((row, index) => (
-                                <StyledTableRow key={index}>
-                                    <StyledTableCell component="th" scope="row">
-                                        {index}
-                                    </StyledTableCell>
+                <Box sx={{ flexGrow: 1, marginY: "2rem", paddingX: "2rem" }}>
+                    <TableContainer component={Paper}>
+                        <Table
+                            sx={{ minWidth: 700 }}
+                            aria-label="customized table"
+                        >
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>#</StyledTableCell>
+                                    <StyledTableCell>Name</StyledTableCell>
+                                    <StyledTableCell>Email</StyledTableCell>
                                     <StyledTableCell>
-                                        {row.name}
+                                        # of reviews
                                     </StyledTableCell>
-                                    <StyledTableCell>
-                                        {row.email}
-                                    </StyledTableCell>
-                                    <StyledTableCell>
-                                        {oneUserByAdmin.numOfUsersReviews}
-                                    </StyledTableCell>
-                                    <StyledTableCell>
-                                        <EditIcon
-                                            color="success"
-                                            sx={{
-                                                marginRight: "1rem",
-                                                cursor: "pointer",
-                                            }}
-                                        />
-                                        <DeleteForeverIcon
-                                            color="error"
-                                            sx={{
-                                                cursor: "pointer",
-                                            }}
-                                        />
-                                    </StyledTableCell>
-                                </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Box>
-        </GlobalLayout>
+                                    <StyledTableCell>Actions</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {users.map((row, index) => (
+                                    <StyledTableRow key={index}>
+                                        <StyledTableCell
+                                            component="th"
+                                            scope="row"
+                                        >
+                                            {index}
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                            {row.name}
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                            {row.email}
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                            {oneUserByAdmin?.numOfUsersReviews}
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                            <EditIcon
+                                                color="success"
+                                                sx={{
+                                                    marginRight: "1rem",
+                                                    cursor: "pointer",
+                                                }}
+                                            />
+                                            <DeleteForeverIcon
+                                                color="error"
+                                                sx={{
+                                                    cursor: "pointer",
+                                                }}
+                                            />
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Box>
+            </GlobalLayout>
+        
     );
 };
 export default Dashboard;

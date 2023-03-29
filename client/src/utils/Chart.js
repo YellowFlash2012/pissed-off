@@ -1,9 +1,13 @@
+import React from "react";
 import axios from "axios";
 import { useQuery } from "react-query";
 
-import CircularProgress from "@mui/material/CircularProgress";
+import { message } from "antd";
 
-import React from "react";
+import { Box } from "@mui/material";
+import { Bar } from "react-chartjs-2";
+
+import { PropagateLoader } from "react-spinners";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -13,9 +17,6 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { Box } from "@mui/material";
-import { message } from "antd";
 
 
 
@@ -37,8 +38,15 @@ const Chart = () => {
 
     if (isLoading) {
         return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress color="success" size="20rem" />
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "60vh",
+                }}
+            >
+                <PropagateLoader color="#36d7b7" size={25} />
             </Box>
         );
     }

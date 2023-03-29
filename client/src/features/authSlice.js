@@ -3,8 +3,11 @@ import axios from "axios"
 import {message} from "antd"
 
 const initialState = {
-    loading: false,
-    error: false,
+    isLoading: false,
+    isSuccess: false,
+    isError: false,
+    error: "",
+    
     user: JSON.parse(localStorage.getItem("user")),
     
     oneUserByAdmin:null,
@@ -114,112 +117,116 @@ const authSlice=createSlice({
     extraReducers: (builder) => {
         // ***signup
         builder.addCase(signupUser.pending, (state) => {
-            state.loading = true;
+            state.isLoading = true;
         });
         builder.addCase(signupUser.fulfilled, (state, { payload }) => {
             const user = payload;
 
-            state.loading = false;
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+            
             state.user = user;
 
             localStorage.setItem("user", JSON.stringify(user));
-            // message.success(`Welcome aboard, ${user.name}`)
-
-            setTimeout(() => {
-                if (user.isAdmin) {
-                    window.location.href = "/protected/dashboard";
-                } else {
-                    window.location.href = "/protected/profile";
-                }
-            }, 5000);
         });
         builder.addCase(signupUser.rejected, (state,action) => {
-            state.loading = false;
-            state.error = true;
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.error = action.payload;
 
             message.error(action.payload)
         });
         
         // ***login
         builder.addCase(loginUser.pending, (state) => {
-            state.loading = true;
+            state.isLoading = true;
         });
         builder.addCase(loginUser.fulfilled, (state, { payload }) => {
             const user  = payload;
-            console.log(user, payload);
 
-            state.loading = false;
+
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+        
             state.user = user;
 
             localStorage.setItem("user", JSON.stringify(user));
             message.success(`Welcome back, ${user.name}`)
 
-            setTimeout(() => {
-                if (user.isAdmin) {
-                    window.location.href = "/protected/dashboard";
-                    
-                } else {
-                    
-                    window.location.href = "/protected/profile";
-                }
-            }, 5000);
         });
         builder.addCase(loginUser.rejected, (state,action) => {
-            state.loading = false;
-            state.error = true;
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.error = action.payload;
 
             message.error(action.payload)
         });
         
         // ***get user profile
         builder.addCase(getUserProfile.pending, (state) => {
-            state.loading = true;
+            state.isLoading = true;
         });
         builder.addCase(getUserProfile.fulfilled, (state, { payload }) => {
             
-            state.loading = false;
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
             state.userProfile = payload;
 
         });
         builder.addCase(getUserProfile.rejected, (state, action) => {
-            state.loading = false;
-            state.error = true;
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.error = action.payload;
 
             message.error(action.payload);
         });
         
         // ***get all users by admin
         builder.addCase(getAllUsers.pending, (state) => {
-            state.loading = true;
+            state.isLoading = true;
         });
         builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
             const users = payload;
-            state.loading = false;
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
             state.users = users;
             
 
         });
         builder.addCase(getAllUsers.rejected, (state, action) => {
-            state.loading = false;
-            state.error = true;
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.error = action.payload;
 
             message.error(action.payload);
         });
         
         // ***get one user by admin
         builder.addCase(getOneUser.pending, (state) => {
-            state.loading = true;
+            state.isLoading = true;
         });
         builder.addCase(getOneUser.fulfilled, (state, { payload }) => {
             const user = payload;
-            state.loading = false;
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
             state.oneUserByAdmin = user;
             
 
         });
         builder.addCase(getOneUser.rejected, (state, action) => {
-            state.loading = false;
-            state.error = true;
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.error = action.payload;
 
             message.error(action.payload);
         });

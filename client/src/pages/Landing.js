@@ -33,20 +33,11 @@ const Landing = () => {
                             component="div"
                             textAlign="center"
                         >
-                            Why another review site?
+                            Customer Feedback Analytics
                         </Typography>
 
                         <Typography variant="body1" color="text.secondary">
-                            That's a fair question. The need arose from the fact
-                            that I noticed that throughout my daily life and
-                            routine, I come across challenges that really piss
-                            me off but then I don't report or make mention of
-                            them on review sites because I don't think of them
-                            as important to warrant writing a review. But at the
-                            same time, I think it'd be good for other people to
-                            know about those and prepare in consequence, not to
-                            avoid them all together, but to be ready to deal
-                            with them when they show up.
+                            Unlike other customer feedback platforms, our chief focus here is on the dreaded 1 and 2 stars that companies do their best to avoid or get rid off. We think that if studied and analyzed from an objective point of views, they could hold valuable insights that will help companies make better marketing and operating decisions 
                         </Typography>
                     </CardContent>
                 </Box>

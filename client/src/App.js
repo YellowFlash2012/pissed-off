@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import NotFound from "./pages/NotFound";
+import AdminRoutes from "./components/AdminRoutes";
 
 function App() {
     return (
@@ -27,18 +28,20 @@ function App() {
 
                 <Route path="/protected" element={<ProtectedRoutes />}>
                     <Route path="/protected/review/:id" element={<Review />} />
-                    
+
                     <Route
                         path="/protected/add-new-review"
                         element={<NewReview />}
                     />
-                    
+
                     <Route path="/protected/blog" element={<Blog />} />
-                    
+
                     <Route path="/protected/profile" element={<Profile />} />
-                    
+                </Route>
+
+                <Route path="/admin" element={<AdminRoutes />}>
                     <Route
-                        path="/protected/dashboard"
+                        path="dashboard"
                         element={<Dashboard />}
                     />
                 </Route>

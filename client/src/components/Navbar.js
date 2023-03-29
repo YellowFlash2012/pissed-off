@@ -284,7 +284,7 @@ const Navbar = () => {
                                                 color: "#000",
                                                 textAlign: "center",
                                             }}
-                                            to="/protected/dashboard"
+                                            to="/admin/dashboard"
                                             // textAlign="center"
                                         >
                                             Dashboard

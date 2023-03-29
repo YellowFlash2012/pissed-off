@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs"
 export const users= [
     {
         name: "Hokage",
-        email: "edimitru0@squarespace.com",
+        email: "hokage0@squarespace.com",
         password: bcrypt.hashSync("g0wEpyoei!yg25df", 12),
         isAdmin: true,
     },

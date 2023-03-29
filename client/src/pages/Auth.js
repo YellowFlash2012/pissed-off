@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
+import {useNavigate} from "react-router-dom"
 import { Button, ButtonGroup, Card, CardContent, Divider, Typography } from "@mui/material";
 
 
@@ -28,8 +29,9 @@ const Auth = () => {
     const { name, email, password, showPassword, isMember, emptyFields } = values;
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { loading, error } = useSelector(store => store.auth);
+    const { isLoading, isError, isSuccess, user } = useSelector(store => store.auth);
 
     const handleClickShowPassword = () => {
         setValues({
@@ -74,19 +76,36 @@ const Auth = () => {
             dispatch(signupUser({ name: values.name, email: values.email, password: values.password }));
             
             // login immediately after successful signup
-            if (!error) {
+            if (isSuccess) {
                 
                 dispatch(
                     loginUser({ email: values.email, password: values.password })
-                    );
+                );
+                
+                if (user && user.isAdmin) {
+                    navigate("/admin/dashboard");
+                    
+                } else {
+                    
+                    navigate("/protected/profile");
+                }
                 }
         } else {
             console.log("login");
-            dispatch(loginUser({email:values.email, password:values.password}));
-        }
+            dispatch(loginUser({ email: values.email, password: values.password }));
+
+            if (isSuccess) {
+                
+                if (user && user.isAdmin) {
+                    navigate("/admin/dashboard");
+                } else {
+                    navigate("/protected/profile");
+                }
+            }
+            }
     };
 
-    if (loading) {
+    if (isLoading) {
         return (
             <Box
                 sx={{
