@@ -77,7 +77,7 @@ const Auth = () => {
             dispatch(signupUser({ name: values.name, email: values.email, password: values.password }));
             
             // login immediately after successful signup
-            if (isSuccess) {
+            if (isError === false) {
                 
                 dispatch(
                     loginUser({ email: values.email, password: values.password })
@@ -94,8 +94,8 @@ const Auth = () => {
         } else {
             dispatch(loginUser({ email: values.email, password: values.password }));
             
-            console.log(isSuccess);
-            console.log(user?.isAdmin);
+            // console.log(isSuccess);
+            // console.log(user?.isAdmin);
   
             if (user && user.isAdmin) {
                     navigate("/admin/dashboard");

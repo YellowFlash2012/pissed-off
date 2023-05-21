@@ -7,20 +7,20 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+
 import { useState } from "react";
 import { Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import {Link,NavLink} from "react-router-dom"
-import { logout } from "../features/authSlice";
+import { logout, logoutUser } from "../features/authSlice";
 import { message } from "antd";
 
-const pages = ["Add Review", "Login", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const pages = ["Add Review", "Login", "Blog"];
+// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
 
@@ -48,7 +48,13 @@ const Navbar = () => {
 
     const upset ="😤"
     const furious="😠" 
-    const rpo="😡"
+    const rpo = "😡"
+    
+    const logoutHandler = () => {
+        dispatch(logout());
+        dispatch(logoutUser())
+        message.info(`See you next time, ${user?.name}`);
+    }
 
     return (
         <AppBar position="static">
@@ -293,12 +299,7 @@ const Navbar = () => {
                                 )}
 
                                 <MenuItem
-                                    onClick={() => {
-                                        dispatch(logout());
-                                        message.info(
-                                            `See you next time, ${user?.name}`
-                                        );
-                                    }}
+                                    onClick={logoutHandler}
                                 >
                                     <Typography textAlign="center">
                                         Logout
