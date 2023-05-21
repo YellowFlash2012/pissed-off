@@ -29,6 +29,7 @@ const Navbar = () => {
 
     const { user } = useSelector(store => store.auth);
     const dispatch = useDispatch();
+    // console.log(user);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -118,10 +119,10 @@ const Navbar = () => {
                         >
                             <MenuItem
 
-                            // onClick={handleCloseNavMenu}
+                    
                             >
                                 <NavLink
-                                    to="/add-new-review"
+                                    to="/protected/add-new-review"
                                     textalign="center"
                                 >
                                     Add Review
@@ -130,7 +131,7 @@ const Navbar = () => {
 
                             <MenuItem
 
-                            // onClick={handleCloseNavMenu}
+                        
                             >
                                 <NavLink to="/auth" textalign="center">
                                     Login
@@ -139,17 +140,15 @@ const Navbar = () => {
 
                             <MenuItem
 
-                            // onClick={handleCloseNavMenu}
+                        
                             >
-                                <NavLink to="/blog" textalign="center">
+                                <NavLink to="/protected/blog" textalign="center">
                                     Blog
                                 </NavLink>
                             </MenuItem>
                         </Menu>
                     </Box>
-                    <AdbIcon
-                        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                    />
+
                     <Typography
                         variant="h5"
                         noWrap
@@ -166,7 +165,7 @@ const Navbar = () => {
                             textDecoration: "none",
                         }}
                     >
-                        LOGO
+                        really pissed-off
                     </Typography>
                     <Box
                         sx={{
@@ -192,7 +191,7 @@ const Navbar = () => {
 
                                 <MenuItem
 
-                                // onClick={handleCloseNavMenu}
+                            
                                 >
                                     <NavLink
                                         style={{ color: "#fff" }}
@@ -206,7 +205,7 @@ const Navbar = () => {
                         ) : (
                             <MenuItem
 
-                            // onClick={handleCloseNavMenu}
+                        
                             >
                                 <NavLink
                                     style={{ color: "#fff" }}
@@ -220,7 +219,7 @@ const Navbar = () => {
                     </Box>
 
                     {/* user account section */}
-                    {user && (
+                    {user && user.name && (
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton
@@ -235,8 +234,9 @@ const Navbar = () => {
                                         // alt="Remy Sharp"
                                         // src="/static/images/avatar/2.jpg"
                                     >
-                                        {user.name.charAt(0)}
-                                        {user.name.split(" ")[1].charAt(0)}
+                                        {user && user?.name.charAt(0)}
+                                        {user &&
+                                            user?.name.split(" ")[1].charAt(0)}
                                     </Avatar>
                                     <Typography
                                         sx={{
@@ -244,7 +244,7 @@ const Navbar = () => {
                                             fontWeight: "bold",
                                         }}
                                     >
-                                        {user.name}
+                                        {user && user?.name}
                                     </Typography>
                                 </IconButton>
                             </Tooltip>
@@ -277,7 +277,7 @@ const Navbar = () => {
                                     </Link>
                                 </MenuItem>
 
-                                {user.isAdmin && (
+                                {user && user.isAdmin && (
                                     <MenuItem onClick={handleCloseUserMenu}>
                                         <Link
                                             style={{
@@ -296,7 +296,7 @@ const Navbar = () => {
                                     onClick={() => {
                                         dispatch(logout());
                                         message.info(
-                                            `See you next time, ${user.name}`
+                                            `See you next time, ${user?.name}`
                                         );
                                     }}
                                 >

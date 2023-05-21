@@ -5,8 +5,10 @@ import axios from "axios";
 import { message } from "antd";
 
 const initialState = {
-    loading: false,
-    error: false,
+    isLoading: false,
+    isSuccess: false,
+    isError: false,
+    error: "",
     
 };
 
@@ -37,16 +39,20 @@ const reviewsSlice = createSlice({
     extraReducers: (builder) => {
         // ***add new review
         builder.addCase(addNewReview.pending, (state) => {
-            state.loading = true;
+            state.isLoading = true;
         });
         builder.addCase(addNewReview.fulfilled, (state, { payload }) => {
-            state.loading = false;
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
 
             message.success("You added a new review!");
         });
         builder.addCase(addNewReview.rejected, (state, action) => {
-            state.loading = false;
-            state.error = true;
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.error = action.payload;
 
             message.error(action.payload);
         });

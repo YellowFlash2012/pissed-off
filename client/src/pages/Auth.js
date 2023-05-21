@@ -14,6 +14,7 @@ import { Alert} from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signupUser } from "../features/authSlice";
 import { PropagateLoader } from "react-spinners";
+import ButtonLoader from "../components/ButtonLoader";
 
 const Auth = () => {
     const [values, setValues] = useState({
@@ -57,7 +58,7 @@ const Auth = () => {
 
     const authFormHandler = (e) => {
         e.preventDefault();
-        console.log(values.name,values.email,values.password);
+        // console.log(values.name,values.email,values.password);
 
         if ((values.isMember && !values.name) || !values.email || !values.password) {
             setValues({
@@ -72,7 +73,7 @@ const Auth = () => {
         }
 
         if (values.isMember) {
-            console.log("signup");
+            // console.log("signup");
             dispatch(signupUser({ name: values.name, email: values.email, password: values.password }));
             
             // login immediately after successful signup
@@ -91,34 +92,34 @@ const Auth = () => {
                 }
                 }
         } else {
-            console.log("login");
             dispatch(loginUser({ email: values.email, password: values.password }));
-
-            if (isSuccess) {
-                
-                if (user && user.isAdmin) {
+            
+            console.log(isSuccess);
+            console.log(user?.isAdmin);
+  
+            if (user && user.isAdmin) {
                     navigate("/admin/dashboard");
-                } else {
+                } else if (user && !user.isAdmin) {
                     navigate("/protected/profile");
                 }
             }
-            }
+            
     };
 
-    if (isLoading) {
-        return (
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "60vh",
-                }}
-            >
-                <PropagateLoader color="#36d7b7" size={15} />
-            </Box>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <Box
+    //             sx={{
+    //                 display: "flex",
+    //                 justifyContent: "center",
+    //                 alignItems: "center",
+    //                 height: "60vh",
+    //             }}
+    //         >
+    //             <PropagateLoader color="#36d7b7" size={15} />
+    //         </Box>
+    //     );
+    // }
 
 
     return (
@@ -222,21 +223,38 @@ const Auth = () => {
                             variant="contained"
                             color="success"
                             size="large"
+                            disabled={isLoading ? true : false}
+                            
                         >
-
-                            {isMember ? "Sign Up" : "Login"}
+                            {isLoading ? (
+                                <ButtonLoader />
+                            ) : isMember ? (
+                                "Sign Up"
+                            ) : (
+                                "Login"
+                            )}
                         </Button>
                     </ButtonGroup>
 
                     {values.isMember ? (
                         <p>
                             Already have an account? Login{" "}
-                            <Button onClick={toggleLoginSignup}>here</Button>
+                            <span
+                                className="auth-span"
+                                onClick={toggleLoginSignup}
+                            >
+                                here
+                            </span>
                         </p>
                     ) : (
                         <p>
                             Don't have an account yet? Sign up{" "}
-                            <Button onClick={toggleLoginSignup}>here</Button>
+                            <span
+                                className="auth-span"
+                                onClick={toggleLoginSignup}
+                            >
+                                here
+                            </span>
                         </p>
                     )}
                 </CardContent>

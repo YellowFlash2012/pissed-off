@@ -8,7 +8,7 @@ const initialState = {
     isError: false,
     error: "",
     
-    user: JSON.parse(localStorage.getItem("user")),
+    user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
     
     oneUserByAdmin:null,
     users:[],
@@ -34,7 +34,7 @@ export const loginUser = createAsyncThunk(
     async (user, thunkAPI) => {
         try {
             const res = await axios.post("/api/v1/users/login", user);
-            // console.log(res);
+            console.log(res);
             return res.data;
         } catch (error) {
             // console.log(error);
@@ -45,7 +45,7 @@ export const loginUser = createAsyncThunk(
 
 export const getUserProfile = createAsyncThunk(
     "auth/getUserProfile",
-    async (user, thunkAPI) => {
+    async (_, thunkAPI) => {
         try {
             const res = await axios.get("/api/v1/users/profile", {
                 headers: {
@@ -111,7 +111,6 @@ const authSlice=createSlice({
         logout: (state, { payload }) => {
             state.user = null;
             localStorage.removeItem("user")
-
         }
     },
     extraReducers: (builder) => {
@@ -144,16 +143,14 @@ const authSlice=createSlice({
             state.isLoading = true;
         });
         builder.addCase(loginUser.fulfilled, (state, { payload }) => {
-            const user  = payload;
-
+            const user = payload;
 
             state.isLoading = false;
             state.isSuccess = true;
             state.isError = false;
-        
-            state.user = user;
 
-            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("user", JSON.stringify(payload));
+
             message.success(`Welcome back, ${user.name}`)
 
         });

@@ -4,6 +4,8 @@ import { config } from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
 
+import cookieParser from "cookie-parser";
+
 import xss from "xss-clean";
 import mongoSanitize from "express-mongo-sanitize";
 
@@ -15,12 +17,13 @@ import { format, transports } from "winston";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/users.js"
 import reviewRoutes from "./routes/reviews.js"
-import { errorHandler } from "./middleware/error.js";
+import { errorHandler, notFound } from "./middleware/error.js";
 import logger from "./logger.js";
 
 config()
 const app = express();
 app.use(express.json())
+app.use(cookieParser())
 app.use(helmet())
 
 app.use(xss());
@@ -60,6 +63,7 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 
+app.use(notFound)
 app.use(errorHandler)
 
 const myFormat = format.printf(({ level, meta, timestamp }) => {

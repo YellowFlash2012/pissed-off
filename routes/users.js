@@ -49,23 +49,29 @@ router.post("/", apiLimiter, asyncHandler(async (req, res) => {
         res.status(400);
 
         throw new Error("A user with this email address already exists");
-
-        
     }
 
     // let's create a new user
     const newUser = await User.create({
-        name,email,password
-    })
+        name, email, password
+    });
+    
+    let token = newUser.createJWT(newUser._id)
 
     if (newUser) {
-        res.status(201).json({
+        res.status(201)
+        .cookie('jwt', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development",
+        sameSite: "strict",
+        maxAge:30*24*60*60*1000
+    })
+            .json({
             _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
             isAdmin: newUser.isAdmin,
-            token:newUser.createJWT(newUser._id)
-        })
+            })
         
     }
 
@@ -99,18 +105,26 @@ router.post("/login", apiLimiter, asyncHandler(async (req, res) => {
     if (!user) {
         res.status(400)
         throw new Error("No such user, sign up first!");
-
-        
     }
 
     if (user && (await user.matchPassword(password))) {
-        res.status(200).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            token: user.createJWT(user._id),
-        });
+        let token = user.createJWT(user._id);
+        // console.log(token);
+        res.status(200)
+        .cookie("jwt", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== "development",
+            sameSite: "strict",
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+        })
+            .json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+            })
+        
+    
     } else {
         res.status(401);
         throw new Error("Invalid credentials");
@@ -121,6 +135,7 @@ router.post("/login", apiLimiter, asyncHandler(async (req, res) => {
 // @route   GET /api/v1/users/profile
 // @access  Private
 router.get("/profile", cache("60 minutes"), protect, async (req, res) => {
+    // console.log(req.user);
     const user = await User.findById(req.user._id);
     
     const reviews = await Review.find({ createdBy: user._id });
@@ -159,6 +174,19 @@ router.put("/profile", protect, asyncHandler(async (req, res) => {
 
 }));
 
+// @desc    logout user
+// @route   POST /api/v1/users/logout
+// @access  Private
+
+router.post("/logout", asyncHandler(async (req, res) => {
+    res.cookie("jwt", "", {
+        httpOnly: true,
+        expires:new Date(0)
+    })
+
+    res.status(200).json({message:"See you next time!"})
+}))
+
 
 // ***Admin zone only***
 // @desc    Get all users
@@ -178,7 +206,7 @@ router.get("/", protect, admin, asyncHandler(async (req, res) => {
 router.get("/:id", protect, admin, asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
-    console.log(user._id);
+    // console.log(user._id);
     
     const numOfUsersReviews = await Review.where({ createdBy:user._id})
     
