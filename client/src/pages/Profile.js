@@ -26,11 +26,7 @@ const Profile = () => {
     const { data, error, isLoading, isError } = useQuery(
         "getUserProfile",
         async () => {
-            return await axios.get("/api/v1/users/profile", {
-                headers: {
-                    authorization: `Bearer ${user.token}`,
-                },
-            });
+            return await axios.get("/api/v1/users/profile");
         },
         
         {
@@ -73,23 +69,32 @@ const Profile = () => {
         );
     }
 
+    const upset = "😤";
+    const furious = "😠";
+    const rpo = "😡";
+
     return (
         <GlobalLayout>
-            <Box sx={{ flexGrow: 1, marginTop: "2rem", paddingX:"2rem" }}>
-                {!isLoading && data?.data.reviews.length === 0 && !user.isAdmin ? (
+            <Box sx={{ flexGrow: 1, marginTop: "2rem", paddingX: "2rem" }}>
+                {!isLoading &&
+                data?.data.reviews.length === 0 &&
+                !user.isAdmin ? (
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                         <Alert severity="error">No review yet, add one!</Alert>
                     </Box>
                 ) : (
-                        <>
-                            <Box sx={{ display: "flex", justifyContent: "center" }}>
-
-                        <Stack direction="row" spacing={2} marginBottom="2rem">
-                            <Chip label={user._id} color="success" />
-                            <Chip label={user.name} color="primary" />
-                            <Chip label={user.email} color="success" />
-                        </Stack>
-                            </Box>
+                    <>
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            <Stack
+                                direction="row"
+                                spacing={2}
+                                marginBottom="2rem"
+                            >
+                                <Chip label={user._id} color="success" />
+                                <Chip label={user.name} color="primary" />
+                                <Chip label={user.email} color="success" />
+                            </Stack>
+                        </Box>
                         <Grid
                             container
                             spacing={{ xs: 2, md: 3 }}
@@ -112,7 +117,13 @@ const Profile = () => {
                                                 </Avatar>
                                             }
                                             title={rw.title.substring(0, 25)}
-                                            subheader={rw.rating}
+                                            subheader={
+                                                rw.rating === "upset"
+                                                    ? upset
+                                                    : rw.rating === "furious"
+                                                    ? furious
+                                                    : rpo
+                                            }
                                         />
                                         <Divider />
                                         <CardContent>
