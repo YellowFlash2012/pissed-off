@@ -20,12 +20,17 @@ const userSchema = new mongoose.Schema(
             required: true,
             validate: {
                 validator: validator.isStrongPassword,
-                message: "Your password must have at least 1 special character, 1 uppercase letter, 1 lowercase letter, 1 number",
+                message:
+                    "Your password must have at least 1 special character, 1 uppercase letter, 1 lowercase letter, 1 number",
             },
             minlength: 13,
-            
         },
         isAdmin: { type: Boolean, required: true, default: false },
+        reviews: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Review",
+        
+        },
     },
     { timestamps: true }
 );

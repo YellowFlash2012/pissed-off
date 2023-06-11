@@ -1,20 +1,15 @@
 import { Box } from "@mui/material";
 import axios from "axios";
 import { useQuery } from "react-query";
-import CircularProgress from "@mui/material/CircularProgress";
+
 import Alert from "@mui/material/Alert";
 
 import Grid from "@mui/material/Grid";
-import {
-    Avatar,
-    Card,
-    CardContent,
-    CardHeader,
-    Divider,
-    Typography,
-} from "@mui/material";
-import { Link } from "react-router-dom";
-import { PropagateLoader } from "react-spinners";
+
+
+import ReviewCard from "../ReviewCard";
+import GlobalLoader from "../GlobalLoader";
+import ErrorAlert from "../ErrorAlert";
 
 const Furious = () => {
     const { data, error, isLoading, isError } = useQuery(
@@ -34,17 +29,13 @@ const Furious = () => {
 
     if (isLoading) {
         return (
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems:"center", height:"60vh" }}>
-                <PropagateLoader color="#36d7b7" size={25} />
-            </Box>
+            <GlobalLoader />
         );
     }
 
     if (isError) {
         return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Alert severity="error">{error}</Alert>
-            </Box>
+            <ErrorAlert error={error} />
         );
     }
 
@@ -72,34 +63,7 @@ const Furious = () => {
                     {data &&
                         data?.data.data.furiousReviews.map((rw) => (
                             <Grid item xs={2} sm={4} md={4} key={rw._id}>
-                                <Card>
-                                    <CardHeader
-                                        avatar={
-                                            <Avatar
-                                                sx={{ bgcolor: `${rw.color}` }}
-                                            >
-                                                {rw.name.charAt(0)}
-                                                {rw.name
-                                                    .split(" ")[1]
-                                                    .charAt(0)}
-                                            </Avatar>
-                                        }
-                                        title={rw.title.substring(0, 25)}
-                                        subheader={rw.rating==="furious" && furious}
-                                    />
-                                    <Divider />
-                                    <CardContent>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                        >
-                                            {rw.content.substring(0, 80)}{" "}
-                                            <Link to={`/protected/review/${rw._id}`}>
-                                                Read More
-                                            </Link>
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
+                                <ReviewCard rw={rw} />
                             </Grid>
                         ))}
                 </Grid>

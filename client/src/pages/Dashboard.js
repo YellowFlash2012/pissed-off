@@ -16,7 +16,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import GlobalLayout from "../components/GlobalLayout";
 import { useEffect } from "react";
-import { getAllUsers} from "../features/authSlice";
+import { getAllUsers, getOneUser} from "../features/authSlice";
 
 import Chart from "../utils/Chart";
 
@@ -31,8 +31,6 @@ const Dashboard = () => {
         dispatch(getAllUsers());
         
     }, [dispatch])
-
-    
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {

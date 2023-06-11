@@ -193,7 +193,7 @@ router.post("/logout", asyncHandler(async (req, res) => {
 // @route   GET /api/v1/users
 // @access  Private - Admin only
 router.get("/", protect, admin, asyncHandler(async (req, res) => {
-    const users = await User.find();
+    const users = await User.find().populate("reviews");
     
     const numOfUsersReviews = await Review.where({ createdBy: req.params.id });
     

@@ -80,14 +80,14 @@ export const getUserProfile = createAsyncThunk(
 // ***admin section
 export const getAllUsers = createAsyncThunk(
     "auth/getAllUsers",
-    async (user, thunkAPI) => {
+    async (_, thunkAPI) => {
         // console.log(thunkAPI.getState().auth.user.token);
         try {
-            const res = await axios.get("/api/v1/users", {
+            const res = await axios.get("/api/v1/users"/*, {
                 headers: {
                     authorization: `Bearer ${thunkAPI.getState().auth.user.token}`,
                 },
-            });
+            }*/);
             // console.log(res);
             return res.data;
         } catch (error) {
@@ -102,13 +102,13 @@ export const getOneUser = createAsyncThunk(
     async (id, thunkAPI) => {
         console.log(thunkAPI.getState().auth.user.token);
         try {
-            const res = await axios.get(`/api/v1/users/${id}`, {
+            const res = await axios.get(`/api/v1/users/${id}`/*, {
                 headers: {
                     authorization: `Bearer ${
                         thunkAPI.getState().auth.user.token
                     }`,
                 },
-            });
+            }*/);
             // console.log(res);
             return res.data;
         } catch (error) {
