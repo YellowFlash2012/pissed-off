@@ -2,12 +2,12 @@ import { Box, Button, ButtonGroup, Card, CardContent, Divider, MenuItem, TextFie
 import { Alert } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ReactQuill from "react-quill";
+
 
 import GlobalLayout from "../components/GlobalLayout";
 
-import "react-quill/dist/quill.snow.css";
-import { addNewReview } from "../features/reviewsSlice";
+// import "react-quill/dist/quill.snow.css";
+// import { addNewReview } from "../features/reviewsSlice";
 
 
 
@@ -49,7 +49,7 @@ const NewReview = () => {
             return;
         }
 
-        dispatch(addNewReview({ title: values.title, rating: values.rating, content: values.content }));
+        // dispatch(addNewReview({ title: values.title, rating: values.rating, content: values.content }));
     }
 
     const modules = {
@@ -133,7 +133,7 @@ const NewReview = () => {
                             </MenuItem>
                         </TextField>
 
-                        <ReactQuill
+                        {/* <ReactQuill
                             
                             value={values.content}
                             onChange={handleChange("content")}
@@ -141,7 +141,7 @@ const NewReview = () => {
                             modules={modules}
                             formats={formats}
                             className="ql-editor"
-                        />
+                        /> */}
 
                         <ButtonGroup orientation="vertical" fullWidth>
                             <Button

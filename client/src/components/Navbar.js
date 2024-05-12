@@ -16,7 +16,7 @@ import { Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import {Link,NavLink} from "react-router-dom"
-import { logout, logoutUser } from "../features/authSlice";
+import { logout} from "../features/authSlice";
 import { message } from "antd";
 
 // const pages = ["Add Review", "Login", "Blog"];
@@ -52,7 +52,7 @@ const Navbar = () => {
     
     const logoutHandler = () => {
         dispatch(logout());
-        dispatch(logoutUser())
+        // dispatch(logoutUser())
         message.info(`See you next time, ${user?.name}`);
     }
 

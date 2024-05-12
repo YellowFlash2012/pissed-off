@@ -15,8 +15,8 @@ import { format, transports } from "winston";
 
 
 import connectDB from "./config/db.js";
-import userRoutes from "./routes/users.js"
-import reviewRoutes from "./routes/reviews.js"
+import userRoutes from "./routes/v1/users.js"
+import reviewRoutes from "./routes/v1/reviews.js";
 import { errorHandler, notFound } from "./middleware/error.js";
 import logger from "./logger.js";
 

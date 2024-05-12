@@ -21,14 +21,12 @@ import { getAllUsers, getOneUser} from "../features/authSlice";
 import Chart from "../utils/Chart";
 
 
-
-
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const { users, oneUserByAdmin } = useSelector((store) => store.auth);
+    const { users } = useSelector((store) => store.auth);
 
     useEffect(() => {
-        dispatch(getAllUsers());
+        // dispatch(getAllUsers());
         
     }, [dispatch])
 
@@ -92,7 +90,7 @@ const Dashboard = () => {
                                             {row.email}
                                         </StyledTableCell>
                                         <StyledTableCell>
-                                            {oneUserByAdmin?.numOfUsersReviews}
+                                            {/* {oneUserByAdmin?.numOfUsersReviews} */}
                                         </StyledTableCell>
                                         <StyledTableCell>
                                             <EditIcon

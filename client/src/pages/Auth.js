@@ -12,7 +12,7 @@ import { Button, ButtonGroup, Card, CardContent, Divider, Typography } from "@mu
 
 import { Alert} from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, signupUser } from "../features/authSlice";
+import {} from "../features/authSlice";
 import { PropagateLoader } from "react-spinners";
 import ButtonLoader from "../components/ButtonLoader";
 
@@ -74,34 +74,39 @@ const Auth = () => {
 
         if (values.isMember) {
             // console.log("signup");
-            dispatch(signupUser({ name: values.name, email: values.email, password: values.password }));
+            // dispatch(signupUser({ name: values.name, email: values.email, password: values.password }));
             
             // login immediately after successful signup
             if (isError === false) {
                 
-                dispatch(
-                    loginUser({ email: values.email, password: values.password })
-                );
+                // dispatch(
+                //     loginUser({ email: values.email, password: values.password })
+                // );
                 
                 if (user && user.isAdmin) {
                     navigate("/admin/dashboard");
                     
                 } else {
-                    
                     navigate("/protected/profile");
+                    
                 }
                 }
         } else {
-            dispatch(loginUser({ email: values.email, password: values.password }));
+            // dispatch(loginUser({ email: values.email, password: values.password }));
             
             // console.log(isSuccess);
             // console.log(user?.isAdmin);
   
-            if (user && user.isAdmin) {
-                    navigate("/admin/dashboard");
-                } else if (user && !user.isAdmin) {
-                    navigate("/protected/profile");
+            setTimeout(() => {
+                
+                if (user?.isAdmin) {
+                    window.location.href = "/admin/dashboard";
+                    // navigate("/admin/dashboard");
+                } else if (!user?.isAdmin) {
+                    // navigate("/home");
+                    window.location.href ="/protected/profile"
                 }
+            }, 3000);
             }
             
     };
