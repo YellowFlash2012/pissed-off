@@ -74,10 +74,10 @@ export const reviewsApiSlice = apiSlice.injectEndpoints({
         
         
         getAllReviews: builder.query({
-            query: () => ({
+            query: ({keyword, pageNumber}) => ({
                 url: "/api/v1/reviews",
+                params:{keyword, pageNumber},
 
-                credentials: "include",
             }),
             providesTags: ["Reviews"],
             keepUnusedDataFor: 7,

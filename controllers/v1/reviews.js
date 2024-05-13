@@ -7,7 +7,20 @@ import Review from "../../models/v1/Review.js";
 // @route   GET /api/v1/reviews
 // @access  Public
 export const getAllReviews = asyncHandler(async (req, res) => {
-    const reviews = await Review.find().limit(24);
+    // pagination config
+    const pageSize = 99;
+    const page = Number(req.query.pageNumber) || 1;
+
+    // search config
+    const keyword = req.query.keyword
+        ? { name: { $regex: req.query.keyword, $options: "i" } }
+        : {};
+
+    const count = await Review.countDocuments({ ...keyword });
+
+    const reviews = await Review.find({ ...keyword })
+        .limit(pageSize)
+        .skip(pageSize * (page - 1));
 
     const upsetReviews = await Review.where({ rating: "upset" }).limit(12);
 
@@ -24,13 +37,15 @@ export const getAllReviews = asyncHandler(async (req, res) => {
     res.status(200).json({
         success: true,
         count: reviews.length,
-        message:"Here are all the reviews",
+        message: "Here are all the reviews",
         reviewsAgg: reviewsAgg,
         data: {
             reviews,
             upsetReviews,
             furiousReviews,
             rpoReviews,
+            page,
+            pages: Math.ceil(count / pageSize),
         },
     });
 });

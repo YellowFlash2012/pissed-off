@@ -24,6 +24,10 @@ function App() {
             <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/home" element={<Home />} />
+
+                {/* pagination route */}
+                <Route path="/home/pages/:pageNumber" element={<Home />} />
+                
                 <Route path="/auth" element={<Auth />} />
 
                 <Route path="/protected" element={<ProtectedRoutes />}>
