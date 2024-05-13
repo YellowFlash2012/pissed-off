@@ -30,8 +30,9 @@ function App() {
                 
                 <Route path="/auth" element={<Auth />} />
 
+                <Route path="/review/:id" element={<Review />} />
+                
                 <Route path="/protected" element={<ProtectedRoutes />}>
-                    <Route path="/protected/review/:id" element={<Review />} />
 
                     <Route
                         path="/protected/add-new-review"

@@ -1,20 +1,24 @@
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom"
+import { useDispatch} from "react-redux";
+
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button, ButtonGroup, Card, CardContent, Divider, Typography } from "@mui/material";
 
-
+import { toast } from "react-toastify";
 import { Alert} from 'antd';
-import { useDispatch, useSelector } from "react-redux";
-import {} from "../features/authSlice";
-import { PropagateLoader } from "react-spinners";
+
+
+import { setCredentials } from "../features/authSlice";
+
 import ButtonLoader from "../components/ButtonLoader";
+import { useLoginMutation, useRegisterMutation } from "../features/authApiSlice";
 
 const Auth = () => {
     const [values, setValues] = useState({
@@ -29,10 +33,14 @@ const Auth = () => {
 
     const { name, email, password, showPassword, isMember, emptyFields } = values;
 
+    // console.log(isMember);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { isLoading, isError, isSuccess, user } = useSelector(store => store.auth);
+    const [register, { isLoading: registerLoading, error: registerError }] = useRegisterMutation();
+    
+    const [login, { isLoading: loginLoading, error: loginError }] = useLoginMutation();
 
     const handleClickShowPassword = () => {
         setValues({
@@ -56,7 +64,7 @@ const Auth = () => {
         });
     }
 
-    const authFormHandler = (e) => {
+    const authSubmitHandler = async (e) => {
         e.preventDefault();
         // console.log(values.name,values.email,values.password);
 
@@ -67,204 +75,200 @@ const Auth = () => {
             });
 
             setTimeout(() => {
-                setValues({...values})
+                setValues({ ...values })
             }, 5000);
             return;
         }
 
         if (values.isMember) {
-            // console.log("signup");
-            // dispatch(signupUser({ name: values.name, email: values.email, password: values.password }));
-            
-            // login immediately after successful signup
-            if (isError === false) {
+            console.log(values.isMember);
+            try {
+                const data = { name, email, password };
+                const res = await register(
+                    data
+                ).unwrap();
+
+                dispatch(setCredentials({ ...res?.data }));
                 
-                // dispatch(
-                //     loginUser({ email: values.email, password: values.password })
-                // );
-                
-                if (user && user.isAdmin) {
+                toast.success(res?.message)
+
+                navigate("/protected/add-new-review");
+            } catch (error) {
+                toast.error(error?.data?.message || error?.error);
+            }
+
+        } else {
+            console.log(values.isMember);
+
+            try {
+                const data = { email, password };
+                const res = await login(data).unwrap();
+
+                // console.log(res);
+    
+                dispatch(setCredentials({ ...res?.data }));
+    
+                toast.success(res?.message)
+
+                if (res?.data?.isAdmin) {
                     navigate("/admin/dashboard");
-                    
                 } else {
                     navigate("/protected/profile");
-                    
                 }
-                }
-        } else {
-            // dispatch(loginUser({ email: values.email, password: values.password }));
-            
-            // console.log(isSuccess);
-            // console.log(user?.isAdmin);
-  
-            setTimeout(() => {
                 
-                if (user?.isAdmin) {
-                    window.location.href = "/admin/dashboard";
-                    // navigate("/admin/dashboard");
-                } else if (!user?.isAdmin) {
-                    // navigate("/home");
-                    window.location.href ="/protected/profile"
-                }
-            }, 3000);
+            } catch (error) {
+                toast.error(error?.data?.message || error?.error);
             }
             
-    };
+        };
+    }
 
-    // if (isLoading) {
-    //     return (
-    //         <Box
-    //             sx={{
-    //                 display: "flex",
-    //                 justifyContent: "center",
-    //                 alignItems: "center",
-    //                 height: "60vh",
-    //             }}
-    //         >
-    //             <PropagateLoader color="#36d7b7" size={15} />
-    //         </Box>
-    //     );
-    // }
+        return (
+            <Box
+                component="form"
+                sx={{
+                    "& > :not(style)": { m: 1, width: "45ch" },
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
+                }}
+                noValidate
+                autoComplete="off"
+                onSubmit={authSubmitHandler}
+            >
+                <Card>
+                    {values.emptyFields && (
+                        <Alert
+                            message="Those fields can NOT be empty!"
+                            // description="Those fields can NOT be empty!"
+                            type="error"
+                            banner
+                            closable
+                        />
+                    )}
+                    <Typography variant="h4" align="center">
+                        {values.isMember ? "Sign Up" : "Login"}
+                    </Typography>
 
+                    <Divider />
 
-    return (
-        <Box
-            component="form"
-            sx={{
-                "& > :not(style)": { m: 1, width: "45ch" },
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh",
-            }}
-            noValidate
-            autoComplete="off"
-            onSubmit={authFormHandler}
-        >
-            <Card>
-                {values.emptyFields && (
-                    <Alert
-                        message="Those fields can NOT be empty!"
-                        // description="Those fields can NOT be empty!"
-                        type="error"
-                        banner
-                        closable
-                    />
-                )}
-                <Typography variant="h4" align="center">
-                    {values.isMember ? "Sign Up" : "Login"}
-                </Typography>
+                    <CardContent>
+                        {values.isMember && (
+                            <TextField
+                                type="text"
+                                id="outlined-basic"
+                                label="Full Name"
+                                variant="outlined"
+                                value={values.name}
+                                onChange={handleChange("name")}
+                                required
+                                helperText=" "
+                                fullWidth
+                            />
+                        )}
 
-                <Divider />
-
-                <CardContent>
-                    {values.isMember && (
                         <TextField
-                            type="text"
+                            type="email"
                             id="outlined-basic"
-                            label="Full Name"
+                            label="Email"
                             variant="outlined"
-                            value={values.name}
-                            onChange={handleChange("name")}
+                            value={values.email}
+                            onChange={handleChange("email")}
                             required
                             helperText=" "
                             fullWidth
                         />
-                    )}
-
-                    <TextField
-                        type="email"
-                        id="outlined-basic"
-                        label="Email"
-                        variant="outlined"
-                        value={values.email}
-                        onChange={handleChange("email")}
-                        required
-                        helperText=" "
-                        fullWidth
-                    />
-                    <TextField
-                        type={values.showPassword ? "text" : "password"}
-                        id="outlined-basic"
-                        label="Password"
-                        variant="outlined"
-                        value={values.password}
-                        onChange={handleChange("password")}
-                        required
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {values.showPassword ? (
-                                            <VisibilityOff />
-                                        ) : (
-                                            <Visibility />
-                                        )}
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                        helperText="13+ characters, 1 special character, 1 uppercase character, 1 number"
-                        fullWidth
-                    />
-
-                    <ButtonGroup orientation="vertical" fullWidth>
-                        <Button
-                            type="button"
+                        <TextField
+                            type={values.showPassword ? "text" : "password"}
+                            id="outlined-basic"
+                            label="Password"
                             variant="outlined"
-                            color="error"
-                            href="/home"
-                            sx={{ marginY: "1rem" }}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="success"
-                            size="large"
-                            disabled={isLoading ? true : false}
-                            
-                        >
-                            {isLoading ? (
-                                <ButtonLoader />
-                            ) : isMember ? (
-                                "Sign Up"
-                            ) : (
-                                "Login"
-                            )}
-                        </Button>
-                    </ButtonGroup>
+                            value={values.password}
+                            onChange={handleChange("password")}
+                            required
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={
+                                                handleMouseDownPassword
+                                            }
+                                            edge="end"
+                                        >
+                                            {values.showPassword ? (
+                                                <VisibilityOff />
+                                            ) : (
+                                                <Visibility />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            helperText="13+ characters, 1 special character, 1 uppercase character, 1 number"
+                            fullWidth
+                        />
 
-                    {values.isMember ? (
-                        <p>
-                            Already have an account? Login{" "}
-                            <span
-                                className="auth-span"
-                                onClick={toggleLoginSignup}
+                        <Stack direction="column">
+                            <Button
+                                type="button"
+                                variant="outlined"
+                                color="error"
+                                href="/home"
+                                sx={{ marginY: "1rem" }}
                             >
-                                here
-                            </span>
-                        </p>
-                    ) : (
-                        <p>
-                            Don't have an account yet? Sign up{" "}
-                            <span
-                                className="auth-span"
-                                onClick={toggleLoginSignup}
+                                Cancel
+                            </Button>
+
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="success"
+                                size="large"
+                                disabled={
+                                    registerLoading || loginLoading
+                                        ? true
+                                        : false
+                                }
                             >
-                                here
-                            </span>
-                        </p>
-                    )}
-                </CardContent>
-            </Card>
-        </Box>
-    );
-};
+                                {registerLoading || loginLoading ? (
+                                    <ButtonLoader />
+                                ) : isMember ? (
+                                    "Sign Up"
+                                ) : (
+                                    "Login"
+                                )}
+                            </Button>
+                        </Stack>
+
+                        {values.isMember ? (
+                            <p>
+                                Already have an account? Login{" "}
+                                <span
+                                    className="auth-span"
+                                    onClick={toggleLoginSignup}
+                                >
+                                    here
+                                </span>
+                            </p>
+                        ) : (
+                            <p>
+                                Don't have an account yet? Sign up{" "}
+                                <span
+                                    className="auth-span"
+                                    onClick={toggleLoginSignup}
+                                >
+                                    here
+                                </span>
+                            </p>
+                        )}
+                    </CardContent>
+                </Card>
+            </Box>
+        );
+    }
+
+
 export default Auth;

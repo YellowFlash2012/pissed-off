@@ -53,7 +53,14 @@ export const registerNewUser = asyncHandler(async (req, res) => {
             .json({
                 success: true,
                 message: `Welcome aboard, ${newUser.name}`,
-                data:user
+                data: {
+                    
+                    _id: newUser._id,
+                    name: newUser.name,
+                    email: newUser.email,
+                    isAdmin:newUser.isAdmin
+                
+                },
             });
     }
 });
@@ -98,7 +105,12 @@ export const loginUser = asyncHandler(async (req, res) => {
             .json({
                 success: true,
                 message:`Welcome back, ${user.name}`,
-                data: user
+                data: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    isAdmin:user.isAdmin
+                }
             });
     } else {
         res.status(401);
@@ -112,7 +124,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
 export const getUserProfile = asyncHandler(async (req, res) => {
     // console.log(req.user);
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).select("-password");
 
     const reviews = await Review.find({ createdBy: user._id });
 
@@ -189,7 +201,7 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 // @access  Private - Admin only
 
 export const getOneUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).select("-password");
 
     // console.log(user._id);
 
@@ -207,9 +219,9 @@ export const getOneUser = asyncHandler(async (req, res) => {
 // @route   PUT /api/v1/users/:id
 // @access  Private - Admin only
 export const updateAUser = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email} = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email) {
         throw new Error("All those fields are required!");
     }
 

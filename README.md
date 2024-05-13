@@ -1,7 +1,7 @@
 # pissed-off
 A directory for recording petty, annoying things that people don't think of writing in their reviews but that may be valuable to someone else.
 
-<a href="https://really-pissed-off.herokuapp.com/">Live preview</a>
+<a href="https://pissed-off.onrender.com/">Live preview</a>
 
 # Project scope
 This is an mvp of platform that will eventually serve as breeding ground for practical ideas that budding entrepreneurs can tap into to launch a new venture or supercharge theur exisitng ones.

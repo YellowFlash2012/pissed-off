@@ -37,7 +37,7 @@ const ReviewCard = ({rw}) => {
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
                     {rw.content.substring(0, 80)}{" "}
-                    <Link to={`/protected/review/${rw._id}`}>Read More</Link>
+                    <Link to={`/review/${rw._id}`}>Read More</Link>
                 </Typography>
             </CardContent>
         </Card>

@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {Link,NavLink} from "react-router-dom"
+import { toast } from "react-toastify";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,13 +16,11 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-import { useState } from "react";
 import { Stack } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
 
-import {Link,NavLink} from "react-router-dom"
 import { logout} from "../features/authSlice";
-import { message } from "antd";
+
+import { useLogoutUserMutation } from "../features/authApiSlice";
 
 // const pages = ["Add Review", "Login", "Blog"];
 // const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -26,6 +29,8 @@ const Navbar = () => {
 
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
+
+    const [logoutUser, { isLoading }] = useLogoutUserMutation()
 
     const { user } = useSelector(store => store.auth);
     const dispatch = useDispatch();
@@ -50,10 +55,12 @@ const Navbar = () => {
     const furious="😠" 
     const rpo = "😡"
     
-    const logoutHandler = () => {
+    const logoutHandler = async () => {
+        const res = await logoutUser().unwrap();
+
         dispatch(logout());
         // dispatch(logoutUser())
-        message.info(`See you next time, ${user?.name}`);
+        toast.success(res?.message);
     }
 
     return (
