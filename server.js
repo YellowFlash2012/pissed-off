@@ -12,6 +12,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import path from "path";
 import expresswinston from "express-winston"
 import { format, transports } from "winston";
+import cors from "cors"
 
 
 import connectDB from "./config/db.js";
@@ -25,6 +26,7 @@ const app = express();
 app.use(express.json())
 app.use(cookieParser())
 app.use(helmet())
+app.use(cors())
 
 app.use(xss());
 app.use(mongoSanitize());
