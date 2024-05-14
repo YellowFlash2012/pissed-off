@@ -32,35 +32,48 @@ const Upset = () => {
 
     return (
         <>
-        {
-                isLoading ? <GlobalLoader /> : error ? <ErrorAlert error={error} /> : (<Box sx={{ flexGrow: 1 }}>
-            {data?.data?.upsetReviews === "undefined" && (
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <Alert severity="error">No review yet, add one!</Alert>
-                </Box>
-            )}
-            {!isLoading && data?.data?.upsetReviews.length === 0 ? (
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <Alert severity="error">No review yet, add one!</Alert>
-                </Box>
+            {isLoading ? (
+                <GlobalLoader />
+            ) : error ? (
+                <ErrorAlert error={error?.data?.message} />
             ) : (
-                <Grid
-                    container
-                    spacing={{ xs: 2, md: 3 }}
-                    columns={{ xs: 4, sm: 8, md: 12 }}
-                >
-                    {data &&
-                        data?.data?.upsetReviews.map((rw) => (
-                            <Grid item xs={2} sm={4} md={4} key={rw._id}>
-                                <ReviewCard rw={rw} />
-                            </Grid>
-                        ))}
-                </Grid>
+                <Box sx={{ flexGrow: 1 }}>
+                    {data?.data?.upsetReviews === "undefined" && (
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            <Alert severity="error">
+                                No review yet, add one!
+                            </Alert>
+                        </Box>
+                    )}
+                    {!isLoading && data?.data?.upsetReviews.length === 0 ? (
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            <Alert severity="error">
+                                No review yet, add one!
+                            </Alert>
+                        </Box>
+                    ) : (
+                        <Grid
+                            container
+                            spacing={{ xs: 2, md: 3 }}
+                            columns={{ xs: 4, sm: 8, md: 12 }}
+                        >
+                            {data &&
+                                data?.data?.upsetReviews.map((rw) => (
+                                    <Grid
+                                        item
+                                        xs={2}
+                                        sm={4}
+                                        md={4}
+                                        key={rw._id}
+                                    >
+                                        <ReviewCard rw={rw} />
+                                    </Grid>
+                                ))}
+                        </Grid>
+                    )}
+                </Box>
             )}
-        </Box>)
-        }
         </>
-        
     );
 };
 export default Upset;

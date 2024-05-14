@@ -39,7 +39,7 @@ const Furious = () => {
             {isLoading ? (
                 <GlobalLoader />
             ) : error ? (
-                <ErrorAlert error={error} />
+                <ErrorAlert error={error?.data?.message} />
             ) : (
                 <Box sx={{ flexGrow: 1 }}>
                     {data?.data?.furiousReviews === "undefined" && (
