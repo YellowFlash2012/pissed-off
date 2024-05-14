@@ -16,9 +16,11 @@ import Paginate from "../Paginate";
 const All = () => {
     const { keyword, pageNumber } = useParams();
 
-    const { data, error, isLoading } = useGetAllReviewsQuery({keyword, pageNumber});
+    const { data, error, isLoading, refetch } = useGetAllReviewsQuery({keyword, pageNumber});
 
     console.log(data);
+
+    console.log(error);
 
     return (
         <>
