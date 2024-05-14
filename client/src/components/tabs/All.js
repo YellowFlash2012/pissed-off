@@ -27,7 +27,7 @@ const All = () => {
             {isLoading ? (
                 <GlobalLoader />
             ) : error ? (
-                <ErrorAlert error={error?.data?.message} />
+                <ErrorAlert error={error?.data?.message || error?.error} />
             ) : (
                 <Box sx={{ flexGrow: 1 }}>
                     {data?.data?.reviews === "undefined" && (
