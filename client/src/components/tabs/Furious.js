@@ -11,10 +11,15 @@ import ReviewCard from "../ReviewCard";
 import GlobalLoader from "../GlobalLoader";
 import ErrorAlert from "../ErrorAlert";
 import { useGetAllReviewsQuery } from "../../features/reviewsSlice";
+import { useParams } from "react-router-dom";
 
 const Furious = () => {
+    const { keyword, pageNumber } = useParams();
 
-    const { data, error, isLoading} = useGetAllReviewsQuery();
+    const { data, error, isLoading } = useGetAllReviewsQuery({
+        keyword,
+        pageNumber,
+    });
 
     console.log(data);
 

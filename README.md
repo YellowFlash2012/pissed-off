@@ -8,7 +8,7 @@ This is an mvp of platform that will eventually serve as breeding ground for pra
 But right now, it's in its infancy and will just be about gathering people petty annoying experiences that they don't find it worthy to share with others even though those experiences could help other make better informed decisions.
 
 # Tech stack:
-front end: react, redux, react query
+front end: react, rtk
 backend: node, expressjs, mongoose
 db: mongoDB
 
