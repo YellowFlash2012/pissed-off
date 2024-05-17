@@ -13,22 +13,12 @@ import ErrorAlert from "../ErrorAlert";
 import { useGetAllReviewsQuery } from "../../features/reviewsSlice";
 
 const PissedOff = () => {
-    // const { data, error, isLoading, isError } = useQuery(
-    //     "getRPOReviews",
-    //     async () => {
-    //         return await axios.get("/api/v1/reviews");
-    //     },
-    //     {
-    //         cacheTime: 600000,
-    //         // staleTime:60000
-    //         refetchOnMount: false,
-    //         refetchOnWindowFocus: false,
-    //     }
-    // );
 
     const { data, error, isLoading } = useGetAllReviewsQuery();
 
     console.log(data);
+
+    console.log(error);
 
     return (
         <>

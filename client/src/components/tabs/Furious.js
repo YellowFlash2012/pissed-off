@@ -13,22 +13,12 @@ import ErrorAlert from "../ErrorAlert";
 import { useGetAllReviewsQuery } from "../../features/reviewsSlice";
 
 const Furious = () => {
-    // const { data, error, isLoading, isError } = useQuery(
-    //     "getFuriousReviews",
-    //     async () => {
-    //         return await axios.get("/api/v1/reviews");
-    //     },
-    //     {
-    //         cacheTime: 600000,
-    //         // staleTime:60000
-    //         refetchOnMount: false,
-    //         refetchOnWindowFocus: false,
-    //     }
-    // );
 
     const { data, error, isLoading} = useGetAllReviewsQuery();
 
     console.log(data);
+
+    console.log(error);
 
     // const upset = "😤";
     // const furious = "😠";
