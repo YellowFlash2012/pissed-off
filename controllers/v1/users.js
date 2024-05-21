@@ -209,9 +209,9 @@ export const getOneUser = asyncHandler(async (req, res) => {
 
     res.status(200).json({
         success: true,
-        count:numOfUsersReviews.length,
+        numOfUsersReviews: numOfUsersReviews.length,
         message: "Here is the requested user profile details",
-        data:user,
+        data: user,
     });
 });
 

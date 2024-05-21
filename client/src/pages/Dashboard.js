@@ -1,7 +1,6 @@
-import { Box} from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 
-
+import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -15,20 +14,18 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 
 import GlobalLayout from "../components/GlobalLayout";
-import { useEffect } from "react";
-import { getAllUsers, getOneUser} from "../features/authSlice";
 
 import Chart from "../utils/Chart";
+import { useGetAllUsersQuery, useGetOneUserQuery } from "../features/authApiSlice";
 
 
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const { users } = useSelector((store) => store.auth);
 
-    useEffect(() => {
-        // dispatch(getAllUsers());
-        
-    }, [dispatch])
+
+    const { data, isLoading, error } = useGetAllUsersQuery();
+    
+    // const {data: getOneUser} = useGetOneUserQuery();
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -75,7 +72,7 @@ const Dashboard = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {users.map((row, index) => (
+                                {data?.data.map((row, index) => (
                                     <StyledTableRow key={index}>
                                         <StyledTableCell
                                             component="th"
@@ -90,7 +87,7 @@ const Dashboard = () => {
                                             {row.email}
                                         </StyledTableCell>
                                         <StyledTableCell>
-                                            {/* {oneUserByAdmin?.numOfUsersReviews} */}
+                                            {/* {getOneUser?.numOfUsersReviews} */}
                                         </StyledTableCell>
                                         <StyledTableCell>
                                             <EditIcon

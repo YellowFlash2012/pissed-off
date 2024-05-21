@@ -1,16 +1,15 @@
-import { useQuery } from "react-query";
-import axios from "axios";
+
 
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 
 import Grid from "@mui/material/Grid";
+import { useParams } from "react-router-dom";
 
 import ReviewCard from "../ReviewCard";
 import GlobalLoader from "../GlobalLoader";
 import ErrorAlert from "../ErrorAlert";
 import { useGetAllReviewsQuery } from "../../features/reviewsSlice";
-import { useParams } from "react-router-dom";
 import Paginate from "../Paginate";
 
 const All = () => {
@@ -18,9 +17,9 @@ const All = () => {
 
     const { data, error, isLoading, refetch } = useGetAllReviewsQuery({keyword, pageNumber});
 
-    console.log(data);
+    // console.log(data);
 
-    console.log(error);
+    // console.log(error);
 
     return (
         <>

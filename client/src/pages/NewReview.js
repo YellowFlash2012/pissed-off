@@ -1,10 +1,14 @@
-import { Box, Button, ButtonGroup, Card, CardContent, Divider, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Divider, MenuItem, TextField, Typography } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import { Alert } from "antd";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 
 
 import GlobalLayout from "../components/GlobalLayout";
+import { useAddAReviewMutation } from "../features/reviewsSlice";
+import ButtonLoader from "../components/ButtonLoader";
 
 // import "react-quill/dist/quill.snow.css";
 // import { addNewReview } from "../features/reviewsSlice";
@@ -21,22 +25,16 @@ const NewReview = () => {
         emptyFields:false
     });
 
-    const [rating,setRating]=useState("")
     
-    const dispatch = useDispatch();
-    
-    const { loading, error } = useSelector(store => store.auth);
+    const [addAReview, { isLoading }] = useAddAReviewMutation();
     
     
     const handleChange = (prop) => (e) => {
         setValues({ ...values, [prop]: e.target.value });
     };
     
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
 
-    const addNewReviewHandler = (e) => { 
+    const addNewReviewHandler = async(e) => { 
         e.preventDefault()
 
         if (!values.title || !values.rating || !values.content) {
@@ -50,27 +48,24 @@ const NewReview = () => {
         }
 
         // dispatch(addNewReview({ title: values.title, rating: values.rating, content: values.content }));
+
+        try {
+            const { title, rating, content } = values;
+            const data = { title, rating, content };
+
+            const res = await addAReview(data).unwrap();
+
+            toast.success(res?.message)
+
+        } catch (error) {
+            toast.error(error?.data?.message || error?.error);
+        }
     }
 
-    const modules = {
-    toolbar: [
-      [{ 'header': [1, 2, false] }],
-      ['bold', 'italic', 'underline','strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      ['link', 'image'],
-      ['clean']
-    ],
-  }
-
-  const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet', 'indent',
-    'link', 'image'
-  ]
     
     return (
         <GlobalLayout>
+
             <Box
                 component="form"
                 sx={{
@@ -116,9 +111,7 @@ const NewReview = () => {
 
                         <TextField
                             select
-                            
                             label="Rating"
-                            
                             value={values.rating}
                             onChange={handleChange("rating")}
                             required
@@ -133,17 +126,16 @@ const NewReview = () => {
                             </MenuItem>
                         </TextField>
 
-                        {/* <ReactQuill
-                            
+                        <textarea
+                            name=""
+                            id=""
+                            cols="87"
+                            rows="10"
                             value={values.content}
                             onChange={handleChange("content")}
-                            theme="snow"
-                            modules={modules}
-                            formats={formats}
-                            className="ql-editor"
-                        /> */}
+                        ></textarea>
 
-                        <ButtonGroup orientation="vertical" fullWidth>
+                        <Stack direction="column">
                             <Button
                                 type="button"
                                 variant="outlined"
@@ -159,9 +151,9 @@ const NewReview = () => {
                                 color="success"
                                 size="large"
                             >
-                                Add Review
+                                {isLoading ? <ButtonLoader/> : "Add A Review"}
                             </Button>
-                        </ButtonGroup>
+                        </Stack>
                     </CardContent>
                 </Card>
             </Box>

@@ -1,6 +1,6 @@
+import { useParams } from "react-router-dom";
 import { Box } from "@mui/material";
-import axios from "axios";
-import { useQuery } from "react-query";
+
 
 import Alert from "@mui/material/Alert";
 
@@ -11,7 +11,6 @@ import ReviewCard from "../ReviewCard";
 import GlobalLoader from "../GlobalLoader";
 import ErrorAlert from "../ErrorAlert";
 import { useGetAllReviewsQuery } from "../../features/reviewsSlice";
-import { useParams } from "react-router-dom";
 
 const Furious = () => {
     const { keyword, pageNumber } = useParams();
@@ -21,9 +20,9 @@ const Furious = () => {
         pageNumber,
     });
 
-    console.log(data);
+    // console.log(data);
 
-    console.log(error);
+    // console.log(error);
 
     // const upset = "😤";
     // const furious = "😠";

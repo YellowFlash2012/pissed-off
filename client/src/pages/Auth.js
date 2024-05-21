@@ -9,7 +9,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Button, ButtonGroup, Card, CardContent, Divider, Typography } from "@mui/material";
+import { Button, Card, CardContent, Divider, Typography } from "@mui/material";
 
 import { toast } from "react-toastify";
 import { Alert} from 'antd';
@@ -38,9 +38,9 @@ const Auth = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [register, { isLoading: registerLoading, error: registerError }] = useRegisterMutation();
+    const [register, { isLoading: registerLoading}] = useRegisterMutation();
     
-    const [login, { isLoading: loginLoading, error: loginError }] = useLoginMutation();
+    const [login, { isLoading: loginLoading}] = useLoginMutation();
 
     const handleClickShowPassword = () => {
         setValues({
