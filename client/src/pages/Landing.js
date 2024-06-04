@@ -29,11 +29,11 @@ const Landing = () => {
                             component="div"
                             textAlign="center"
                         >
-                            Customer Feedback Analytics
+                            Short term rental landlord's Feedback
                         </Typography>
 
                         <Typography variant="body1" color="text.secondary">
-                            Unlike other customer feedback platforms, our chief focus here is on the dreaded 1 and 2 stars that companies do their best to avoid or get rid off. We think that if studied and analyzed from an objective point of views, they could hold valuable insights that will help companies make better marketing and operating decisions 
+                            If you are short term rental landlord, doubtless you had had terrible clients. Kindly share your experience with them so that other fellow landlords may know what to expect and whether to have them as clients or not.  
                         </Typography>
                     </CardContent>
                 </Box>

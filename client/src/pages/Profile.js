@@ -1,6 +1,4 @@
-import { useQuery } from "react-query";
-import axios from "axios";
-import { PropagateLoader } from "react-spinners";
+
 import Box from "@mui/material/Box";
 
 import { Alert } from "antd";
@@ -19,55 +17,16 @@ import Chip from "@mui/material/Chip";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import GlobalLayout from "../components/GlobalLayout";
+import { useGetMyProfileQuery } from "../features/authApiSlice";
+import GlobalLoader from "../components/GlobalLoader";
+import ErrorAlert from "../components/ErrorAlert";
 
 const Profile = () => {
     const { user } = useSelector(store => store.auth);
 
-    const { data, error, isLoading, isError } = useQuery(
-        "getUserProfile",
-        async () => {
-            return await axios.get("/api/v1/users/profile");
-        },
-        
-        {
-            cacheTime: 600000,
-            // staleTime:60000
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
-        }
-    );
+    const { data, error, isLoading } = useGetMyProfileQuery()
 
-    // console.log(data);
-
-    if (isLoading) {
-        return (
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100vh",
-                }}
-            >
-                <PropagateLoader color="#36d7b7" size={15} />
-            </Box>
-        );
-    }
-
-    if (isError) {
-        return (
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "60vh",
-                }}
-            >
-                <Alert message={error} type="error" showIcon />
-            </Box>
-        );
-    }
+    console.log(data);
 
     const upset = "😤";
     const furious = "😠";
@@ -75,7 +34,9 @@ const Profile = () => {
 
     return (
         <GlobalLayout>
-            <Box sx={{ flexGrow: 1, marginTop: "2rem", paddingX: "2rem" }}>
+            <>
+            {
+                isLoading ? <GlobalLoader/> : error ? <ErrorAlert error={error?.data?.message || error?.error} /> : (<Box sx={{ flexGrow: 1, marginTop: "2rem", paddingX: "2rem" }}>
                 {!isLoading &&
                 data?.data.reviews.length === 0 &&
                 !user.isAdmin ? (
@@ -145,7 +106,11 @@ const Profile = () => {
                         </Grid>
                     </>
                 )}
-            </Box>
+            </Box>)
+            }
+            </>
+            
+            
         </GlobalLayout>
     );
 };

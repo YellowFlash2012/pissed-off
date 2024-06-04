@@ -28,6 +28,9 @@ function App() {
                 {/* pagination route */}
                 <Route path="/home/pages/:pageNumber" element={<Home />} />
                 
+                {/* search route */}
+                <Route path="/home/search/:keyword" element={<Home />} />
+                
                 <Route path="/auth" element={<Auth />} />
 
                 <Route path="/review/:id" element={<Review />} />

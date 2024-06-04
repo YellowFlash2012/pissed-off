@@ -25,7 +25,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 credentials: "include",
             }),
         }),
-        profile: builder.mutation({
+        getMyProfile: builder.query({
+            query: (data) => ({
+                url: "/api/v1/users/profile",
+                
+                credentials: "include",
+            }),
+        }),
+        updateProfile: builder.mutation({
             query: (data) => ({
                 url: "/api/v1/users/profile",
                 method: "PUT",
@@ -74,7 +81,8 @@ export const {
     useLoginMutation,
     useLogoutUserMutation,
     useRegisterMutation,
-    useProfileMutation,
+    useUpdateProfileMutation,
+    useGetMyProfileQuery,
     useGetAllUsersQuery,
     useGetOneUserQuery,
     useDeleteOneUserMutation,

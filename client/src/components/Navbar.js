@@ -21,6 +21,7 @@ import { Stack } from "@mui/material";
 import { logout} from "../features/authSlice";
 
 import { useLogoutUserMutation } from "../features/authApiSlice";
+import SearchBox from "./SearchBox";
 
 // const pages = ["Add Review", "Login", "Blog"];
 // const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -76,7 +77,7 @@ const Navbar = () => {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        href="/home"
                         sx={{
                             mr: 2,
                             display: { xs: "none", md: "flex" },
@@ -112,6 +113,7 @@ const Navbar = () => {
                         >
                             <MenuIcon />
                         </IconButton>
+
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -130,10 +132,7 @@ const Navbar = () => {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            <MenuItem
-
-                    
-                            >
+                            <MenuItem>
                                 <NavLink
                                     to="/protected/add-new-review"
                                     textalign="center"
@@ -142,20 +141,17 @@ const Navbar = () => {
                                 </NavLink>
                             </MenuItem>
 
-                            <MenuItem
-
-                        
-                            >
+                            <MenuItem>
                                 <NavLink to="/auth" textalign="center">
                                     Login
                                 </NavLink>
                             </MenuItem>
 
-                            <MenuItem
-
-                        
-                            >
-                                <NavLink to="/protected/blog" textalign="center">
+                            <MenuItem>
+                                <NavLink
+                                    to="/protected/blog"
+                                    textalign="center"
+                                >
                                     Blog
                                 </NavLink>
                             </MenuItem>
@@ -180,6 +176,19 @@ const Navbar = () => {
                     >
                         really pissed-off
                     </Typography>
+
+                    <Box sx={{
+                            flexGrow: 0,
+                        display: { xs: "none", md: "flex" },
+                        justifyContent: "center",
+                            width:"50%"
+                            
+                    }}>
+                        
+                    <SearchBox />
+                        </Box>
+
+
                     <Box
                         sx={{
                             flexGrow: 0,
@@ -202,10 +211,7 @@ const Navbar = () => {
                                     </NavLink>
                                 </MenuItem>
 
-                                <MenuItem
-
-                            
-                                >
+                                <MenuItem>
                                     <NavLink
                                         style={{ color: "#fff" }}
                                         to="/protected/blog"
@@ -216,10 +222,7 @@ const Navbar = () => {
                                 </MenuItem>
                             </>
                         ) : (
-                            <MenuItem
-
-                        
-                            >
+                            <MenuItem>
                                 <NavLink
                                     style={{ color: "#fff" }}
                                     to="/auth"
@@ -305,9 +308,7 @@ const Navbar = () => {
                                     </MenuItem>
                                 )}
 
-                                <MenuItem
-                                    onClick={logoutHandler}
-                                >
+                                <MenuItem onClick={logoutHandler}>
                                     <Typography textAlign="center">
                                         Logout
                                     </Typography>

@@ -32,10 +32,10 @@ app.use(xss());
 app.use(mongoSanitize());
 
 // express logging with winston
-app.use(expresswinston.logger({
-    winstonInstance:logger,
-    statusLevels:true
-}))
+// app.use(expresswinston.logger({
+//     winstonInstance:logger,
+//     statusLevels:true
+// }))
 
 const PORT = process.env.PORT || 5000;
 
@@ -72,18 +72,18 @@ const myFormat = format.printf(({ level, meta, timestamp }) => {
     return `${timestamp} ${level}: ${meta.message}`
 })
 
-app.use(expresswinston.errorLogger({
-    transports: [
-        new transports.File({
-            filename:'logsInternalErrors.log'
-        })
-    ],
-    format: format.combine(
-        format.json(),
-        format.timestamp(),
-        myFormat
-    )
-}))
+// app.use(expresswinston.errorLogger({
+//     transports: [
+//         new transports.File({
+//             filename:'logsInternalErrors.log'
+//         })
+//     ],
+//     format: format.combine(
+//         format.json(),
+//         format.timestamp(),
+//         myFormat
+//     )
+// }))
 
 connectDB()
 app.listen(PORT, () => {

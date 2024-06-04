@@ -184,15 +184,18 @@ export const logoutUser = (asyncHandler(async (req, res) => {
 export const getAllUsers = asyncHandler(async (req, res) => {
     const users = await User.find().populate("reviews");
 
-    const numOfUsersReviews = await Review.where({
-        createdBy: req.params.id,
+    const id = users.map(user => user._id);
+
+    const numOfUserReviews = await Review.where({
+        createdBy: id,
     });
 
     res.status(200).json({
         success: true,
         count: users.length,
-        message:"Here are all the users registered on this platform",
-        data:users
+        message: "Here are all the users registered on this platform",
+        data: users,
+    
     });
 });
 

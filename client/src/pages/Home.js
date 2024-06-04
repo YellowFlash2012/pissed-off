@@ -4,10 +4,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import { useState } from "react";
 import GlobalLayout from "../components/GlobalLayout";
-// import All from "../components/tabs/All";
-// import Upset from "../components/tabs/Upset";
-// import Furious from "../components/tabs/Furious";
-// import PissedOff from "../components/tabs/PissedOff";
+
 
 const All = React.lazy(() => import("../components/tabs/All"));
 const Upset = React.lazy(() => import("../components/tabs/Upset"));

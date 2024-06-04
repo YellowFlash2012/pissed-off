@@ -18,9 +18,13 @@ export const getAllReviews = asyncHandler(async (req, res) => {
 
     const count = await Review.countDocuments({ ...keyword });
 
+    // console.log(keyword);
+
     const reviews = await Review.find({ ...keyword })
         .limit(pageSize)
         .skip(pageSize * (page - 1));
+    
+    
 
     const upsetReviews = await Review.where({ rating: "upset" }).limit(12);
 

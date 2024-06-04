@@ -24,6 +24,8 @@ const Dashboard = () => {
 
 
     const { data, isLoading, error } = useGetAllUsersQuery();
+
+    
     
     // const {data: getOneUser} = useGetOneUserQuery();
 
