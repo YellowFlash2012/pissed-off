@@ -13,7 +13,7 @@ export const getAllReviews = asyncHandler(async (req, res) => {
 
     // search config
     const keyword = req.query.keyword
-        ? { name: { $regex: req.query.keyword, $options: "i" } }
+        ? { title: { $regex: req.query.keyword, $options: "i" } }
         : {};
 
     const count = await Review.countDocuments({ ...keyword });

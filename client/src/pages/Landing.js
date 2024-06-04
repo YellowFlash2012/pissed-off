@@ -29,7 +29,7 @@ const Landing = () => {
                             component="div"
                             textAlign="center"
                         >
-                            Short term rental landlord's Feedback
+                            Share critical feedback with other short term rental landlord
                         </Typography>
 
                         <Typography variant="body1" color="text.secondary">
